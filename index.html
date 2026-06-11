@@ -1,696 +1,427 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Omkar Marne — Senior Android Developer with 11 years of experience. Kotlin, Jetpack Compose, BLE/IoT, ARCore." />
-  <title>Omkar Marne · Senior Android Developer</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            zinc: {
-              950: '#09090b',
-              900: '#18181b',
-              800: '#27272a',
-              700: '#3f3f46',
-              400: '#a1a1aa',
-              300: '#d4d4d8',
-              100: '#f4f4f5',
-            },
-            violet: {
-              400: '#a78bfa',
-              500: '#8b5cf6',
-              600: '#7c3aed',
-              700: '#6d28d9',
-            }
-          },
-          fontFamily: {
-            sans: ['Inter', 'system-ui', 'sans-serif'],
-            mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
-          },
-          animation: {
-            'blink': 'blink 1s step-end infinite',
-            'fade-up': 'fadeUp 0.6s ease forwards',
-            'glow-pulse': 'glowPulse 3s ease-in-out infinite',
-          },
-          keyframes: {
-            blink: { '0%,100%': { opacity: '1' }, '50%': { opacity: '0' } },
-            fadeUp: { 'from': { opacity: '0', transform: 'translateY(24px)' }, 'to': { opacity: '1', transform: 'translateY(0)' } },
-            glowPulse: { '0%,100%': { boxShadow: '0 0 20px rgba(124,58,237,0.3)' }, '50%': { boxShadow: '0 0 40px rgba(124,58,237,0.6)' } },
-          }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Omkar Marne | Senior Android Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <style>
+        :root {
+            --md-primary: #3f51b5;
+            --md-primary-variant: #303f9f;
+            --md-secondary: #009688;
+            --md-background: #f5f5f5;
+            --md-surface: #ffffff;
+            --md-error: #b00020;
+            --md-on-primary: #ffffff;
+            --md-on-surface: #212121;
+            --md-on-surface-variant: #666666;
+            --md-divider: #e0e0e0;
+            --shadow-1dp: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            --shadow-2dp: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
         }
-      }
-    }
-  </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <style>
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body { background: #09090b; color: #e4e4e7; font-family: 'Inter', system-ui, sans-serif; }
 
-    /* ── Scrollbar ── */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: #09090b; }
-    ::-webkit-scrollbar-thumb { background: #7c3aed; border-radius: 3px; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    /* ── Nav ── */
-    #navbar { transition: background 0.3s, box-shadow 0.3s; }
-    #navbar.scrolled { background: rgba(9,9,11,0.92); backdrop-filter: blur(12px); box-shadow: 0 1px 0 rgba(124,58,237,0.25); }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--md-background);
+            color: var(--md-on-surface);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
 
-    /* ── Nav links ── */
-    .nav-link { position: relative; }
-    .nav-link::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: #7c3aed; transition: width 0.3s ease; border-radius: 2px; }
-    .nav-link:hover::after { width: 100%; }
+        /* Layout Structure */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
 
-    /* ── Hero terminal card ── */
-    .terminal-card { background: #18181b; border: 1px solid #3f3f46; border-radius: 12px; overflow: hidden; }
-    .terminal-bar { background: #27272a; padding: 10px 16px; display: flex; align-items: center; gap: 8px; }
-    .terminal-dot { width: 12px; height: 12px; border-radius: 50%; }
-    .cursor { display: inline-block; width: 2px; height: 1.1em; background: #7c3aed; margin-left: 2px; vertical-align: text-bottom; animation: blink 1s step-end infinite; }
+        @media (min-width: 900px) {
+            .container {
+                grid-template-columns: 350px 1fr;
+                align-items: start;
+            }
+            .sidebar {
+                position: sticky;
+                top: 24px;
+            }
+        }
 
-    /* ── Skill chip ── */
-    .skill-chip { background: #18181b; border: 1px solid #3f3f46; border-radius: 8px; padding: 10px 16px; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: #a78bfa; transition: all 0.2s ease; white-space: nowrap; }
-    .skill-chip:hover { border-color: #7c3aed; background: rgba(124,58,237,0.1); box-shadow: 0 0 12px rgba(124,58,237,0.25); transform: translateY(-2px); }
+        /* Material Component: Card */
+        .md-card {
+            background: var(--md-surface);
+            border-radius: 8px;
+            box-shadow: var(--shadow-1dp);
+            padding: 24px;
+            margin-bottom: 24px;
+            transition: box-shadow 0.3s cubic-bezier(.25,.8,.25,1);
+        }
+        
+        .md-card:hover {
+            box-shadow: var(--shadow-2dp);
+        }
 
-    /* ── Experience timeline ── */
-    .timeline-line { position: absolute; left: 7px; top: 28px; bottom: 0; width: 2px; background: linear-gradient(to bottom, #7c3aed, transparent); }
+        /* Sidebar / Header Components */
+        .profile-header {
+            text-align: center;
+            border-bottom: 1px solid var(--md-divider);
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
 
-    /* ── Project card ── */
-    .project-card { background: #18181b; border: 1px solid #3f3f46; border-radius: 12px; overflow: hidden; transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease; }
-    .project-card:hover { transform: translateY(-4px) scale(1.01); border-color: #7c3aed; box-shadow: 0 0 28px rgba(124,58,237,0.3); }
-    .project-img { width: 100%; height: 180px; object-fit: cover; background: linear-gradient(135deg, #18181b 0%, #27272a 50%, #1a1a2e 100%); position: relative; overflow: hidden; }
+        .profile-name {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--md-primary);
+            margin-bottom: 4px;
+        }
 
-    /* ── Contact form ── */
-    .form-input { background: #18181b; border: 1px solid #3f3f46; border-radius: 8px; color: #e4e4e7; padding: 12px 16px; width: 100%; transition: border-color 0.2s, box-shadow 0.2s; outline: none; font-family: 'Inter', sans-serif; font-size: 0.95rem; }
-    .form-input:focus { border-color: #7c3aed; box-shadow: 0 0 0 3px rgba(124,58,237,0.15); }
-    .form-input::placeholder { color: #52525b; }
+        .profile-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--md-on-surface-variant);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
-    /* ── CTA button ── */
-    .btn-primary { background: #7c3aed; color: #fff; padding: 14px 32px; border-radius: 8px; font-weight: 600; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s ease; border: none; cursor: pointer; text-decoration: none; }
-    .btn-primary:hover { background: #6d28d9; box-shadow: 0 0 24px rgba(124,58,237,0.5); transform: translateY(-1px); }
-    .btn-outline { background: transparent; color: #a78bfa; padding: 10px 20px; border-radius: 8px; font-weight: 500; font-size: 0.85rem; border: 1px solid #7c3aed; cursor: pointer; text-decoration: none; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 6px; }
-    .btn-outline:hover { background: rgba(124,58,237,0.1); box-shadow: 0 0 12px rgba(124,58,237,0.3); }
+        .status-banner {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 500;
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
 
-    /* ── Section heading accent ── */
-    .section-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: #7c3aed; letter-spacing: 0.15em; text-transform: uppercase; }
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            color: var(--md-on-surface);
+        }
 
-    /* ── Mobile menu ── */
-    #mobile-menu { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, opacity 0.3s ease; opacity: 0; }
-    #mobile-menu.open { max-height: 400px; opacity: 1; }
+        .contact-item a {
+            color: var(--md-primary);
+            text-decoration: none;
+        }
 
-    /* ── Glow divider ── */
-    .glow-divider { height: 1px; background: linear-gradient(to right, transparent, #7c3aed, transparent); margin: 0; }
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
 
-    /* ── Reveal animation ── */
-    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
+        .contact-item .material-icons {
+            color: var(--md-secondary);
+            font-size: 20px;
+        }
 
-    /* ── Social icon ── */
-    .social-icon { display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 10px; border: 1px solid #3f3f46; background: #18181b; color: #a1a1aa; transition: all 0.2s ease; }
-    .social-icon:hover { border-color: #7c3aed; color: #a78bfa; box-shadow: 0 0 14px rgba(124,58,237,0.3); }
+        /* Typography & Section Styling */
+        h2.section-title {
+            font-size: 20px;
+            font-weight: 500;
+            color: var(--md-primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 2px solid var(--md-primary);
+            padding-bottom: 6px;
+        }
 
-    /* ── Tag badge ── */
-    .tag { background: rgba(124,58,237,0.15); color: #a78bfa; border: 1px solid rgba(124,58,237,0.3); border-radius: 4px; padding: 2px 8px; font-size: 0.72rem; font-family: 'JetBrains Mono', monospace; }
+        h3.item-title {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--md-on-surface);
+        }
 
-    @media (prefers-reduced-motion: reduce) {
-      *, .cursor { animation: none !important; transition: none !important; }
-    }
-  </style>
+        .item-subtitle {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--md-secondary);
+            margin-bottom: 4px;
+        }
+
+        .item-meta {
+            font-size: 13px;
+            color: var(--md-on-surface-variant);
+            margin-bottom: 12px;
+            font-style: italic;
+        }
+
+        /* Experience Timeline Elements */
+        .experience-item {
+            position: relative;
+            padding-bottom: 24px;
+            border-left: 2px solid var(--md-divider);
+            padding-left: 20px;
+            margin-left: 10px;
+        }
+
+        .experience-item:last-child {
+            border-left: 2px solid transparent;
+            padding-bottom: 0;
+        }
+
+        .experience-item::before {
+            content: '';
+            position: absolute;
+            left: -7px;
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--md-primary);
+        }
+
+        ul.bullet-list {
+            list-style-type: none;
+        }
+
+        ul.bullet-list li {
+            position: relative;
+            padding-left: 16px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: var(--md-on-surface);
+        }
+
+        ul.bullet-list li::before {
+            content: "•";
+            color: var(--md-secondary);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        /* Material Component: Chips */
+        .chip-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .chip-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--md-on-surface-variant);
+            margin-bottom: 6px;
+            margin-top: 12px;
+        }
+
+        .md-chip {
+            display: inline-flex;
+            align-items: center;
+            height: 32px;
+            padding: 0 12px;
+            font-size: 13px;
+            border-radius: 16px;
+            background-color: #e0e0e0;
+            color: #333333;
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        .md-chip.tech-core {
+            background-color: #e8eaf6;
+            color: #1a237e;
+        }
+
+        .md-chip.tech-spec {
+            background-color: #e0f2f1;
+            color: #004d40;
+        }
+    </style>
 </head>
 <body>
 
-<!-- ══════════════════════ NAV ══════════════════════ -->
-<header id="navbar" class="fixed top-0 left-0 right-0 z-50 px-6 py-4">
-  <nav class="max-w-6xl mx-auto flex items-center justify-between" aria-label="Main navigation">
-    <!-- Logo -->
-    <a href="#home" class="flex items-center gap-2 group" aria-label="Omkar Marne home">
-      <div class="w-8 h-8 rounded-lg bg-violet-600 flex items-center justify-center text-white font-bold text-sm font-mono">OM</div>
-      <span class="font-semibold text-zinc-100 hidden sm:block">Omkar Marne</span>
-    </a>
-
-    <!-- Desktop nav -->
-    <ul class="hidden md:flex items-center gap-8 list-none m-0 p-0">
-      <li><a href="#about" class="nav-link text-zinc-400 hover:text-zinc-100 text-sm font-medium transition-colors">About</a></li>
-      <li><a href="#skills" class="nav-link text-zinc-400 hover:text-zinc-100 text-sm font-medium transition-colors">Skills</a></li>
-      <li><a href="#experience" class="nav-link text-zinc-400 hover:text-zinc-100 text-sm font-medium transition-colors">Experience</a></li>
-      <li><a href="#projects" class="nav-link text-zinc-400 hover:text-zinc-100 text-sm font-medium transition-colors">Projects</a></li>
-      <li><a href="#contact" class="btn-primary py-2 px-5 text-sm">Contact</a></li>
-    </ul>
-
-    <!-- Mobile hamburger -->
-    <button id="hamburger" class="md:hidden flex flex-col justify-center gap-1.5 w-8 h-8 cursor-pointer" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
-      <span class="hamburger-line block h-0.5 bg-zinc-300 rounded transition-all duration-300 origin-center"></span>
-      <span class="hamburger-line block h-0.5 bg-zinc-300 rounded transition-all duration-300"></span>
-      <span class="hamburger-line block h-0.5 bg-zinc-300 rounded transition-all duration-300 origin-center"></span>
-    </button>
-  </nav>
-
-  <!-- Mobile menu -->
-  <div id="mobile-menu" role="menu" class="md:hidden max-w-6xl mx-auto">
-    <ul class="flex flex-col gap-1 pt-3 pb-4 border-t border-zinc-800 mt-3 list-none p-0">
-      <li><a href="#about" class="block px-3 py-2.5 text-zinc-300 hover:text-violet-400 hover:bg-zinc-900 rounded-lg text-sm font-medium transition-colors" role="menuitem">About</a></li>
-      <li><a href="#skills" class="block px-3 py-2.5 text-zinc-300 hover:text-violet-400 hover:bg-zinc-900 rounded-lg text-sm font-medium transition-colors" role="menuitem">Skills</a></li>
-      <li><a href="#experience" class="block px-3 py-2.5 text-zinc-300 hover:text-violet-400 hover:bg-zinc-900 rounded-lg text-sm font-medium transition-colors" role="menuitem">Experience</a></li>
-      <li><a href="#projects" class="block px-3 py-2.5 text-zinc-300 hover:text-violet-400 hover:bg-zinc-900 rounded-lg text-sm font-medium transition-colors" role="menuitem">Projects</a></li>
-      <li><a href="#contact" class="block px-3 py-2.5 text-violet-400 font-semibold text-sm" role="menuitem">Contact →</a></li>
-    </ul>
-  </div>
-</header>
-
-<!-- ══════════════════════ HERO ══════════════════════ -->
-<main>
-<section id="home" class="min-h-screen flex items-center pt-24 pb-16 px-6">
-  <div class="max-w-6xl mx-auto w-full grid md:grid-cols-2 gap-12 items-center">
-
-    <!-- Left: Copy -->
-    <div>
-      <p class="section-eyebrow mb-4">Available · Remote & On-site</p>
-      <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black text-zinc-100 leading-[1.05] tracking-tight mb-5">
-        Omkar<br />
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-violet-600">Marne</span>
-      </h1>
-      <p class="text-xl sm:text-2xl text-zinc-400 font-medium mb-3">Senior Android Developer</p>
-      <p class="text-zinc-500 text-base max-w-md mb-8 leading-relaxed">
-        11 years shipping high-scale apps — LinkedIn, Whirlpool, PTC Vuforia.
-        Deep in Kotlin, Jetpack Compose, BLE/IoT & ARCore.
-      </p>
-      <div class="flex flex-wrap gap-3">
-        <a href="#projects" class="btn-primary">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
-          View My Work
-        </a>
-        <a href="mailto:marneomkar25@gmail.com" class="btn-outline">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-          Get In Touch
-        </a>
-      </div>
-
-      <!-- Stat pills -->
-      <div class="flex flex-wrap gap-4 mt-10">
-        <div class="flex items-center gap-2">
-          <div class="w-2 h-2 rounded-full bg-violet-500"></div>
-          <span class="text-zinc-400 text-sm font-medium">11 yrs experience</span>
-        </div>
-        <div class="flex items-center gap-2">
-          <div class="w-2 h-2 rounded-full bg-violet-500"></div>
-          <span class="text-zinc-400 text-sm font-medium">500M+ user apps</span>
-        </div>
-        <div class="flex items-center gap-2">
-          <div class="w-2 h-2 rounded-full bg-violet-500"></div>
-          <span class="text-zinc-400 text-sm font-medium">Pune, India</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Right: Terminal card -->
-    <div class="terminal-card reveal" style="animation-delay:0.2s">
-      <div class="terminal-bar">
-        <span class="terminal-dot" style="background:#ff5f57"></span>
-        <span class="terminal-dot" style="background:#febc2e"></span>
-        <span class="terminal-dot" style="background:#28c840"></span>
-        <span class="text-zinc-500 text-xs font-mono ml-2">omkar@android:~</span>
-      </div>
-      <div class="p-6 font-mono text-sm leading-7 text-zinc-300 space-y-1">
-        <p><span class="text-violet-400">$</span> <span class="text-zinc-200">whoami</span></p>
-        <p class="text-green-400 text-xs">Senior Android Developer</p>
-        <p class="mt-2"><span class="text-violet-400">$</span> <span class="text-zinc-200">cat skills.txt</span></p>
-        <p class="text-blue-300 text-xs">Kotlin · Jetpack Compose · MVVM</p>
-        <p class="text-blue-300 text-xs">BLE/IoT · ARCore · KMP · TDD</p>
-        <p class="mt-2"><span class="text-violet-400">$</span> <span class="text-zinc-200">git log --oneline -3</span></p>
-        <p class="text-yellow-300 text-xs">a3f9c1e Fixed 3GB memory leak → 350MB</p>
-        <p class="text-yellow-300 text-xs">7b2d04a Built LinkedIn Groups end-to-end</p>
-        <p class="text-yellow-300 text-xs">e8a156f Shipped AR viewer w/ NDK + ARCore</p>
-        <p class="mt-2"><span class="text-violet-400">$</span> <span class="text-zinc-200">./run_portfolio.sh</span> <span class="cursor"></span></p>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ══════════════════════ ABOUT ══════════════════════ -->
-<div class="glow-divider"></div>
-<section id="about" class="py-24 px-6">
-  <div class="max-w-6xl mx-auto">
-    <p class="section-eyebrow mb-3 reveal">About Me</p>
-    <h2 class="text-3xl sm:text-4xl font-bold text-zinc-100 mb-12 reveal">
-      Turning complex problems<br class="hidden sm:block" /> into polished Android apps
-    </h2>
-    <div class="grid md:grid-cols-2 gap-12 items-start">
-      <div class="reveal space-y-5 text-zinc-400 leading-relaxed">
-        <p>
-          I'm a Senior Android Developer with <strong class="text-zinc-200">11 years</strong> of hands-on experience building consumer and enterprise applications used by millions — from LinkedIn's social features to Whirlpool's smart home appliances and PTC's industrial AR platform.
-        </p>
-        <p>
-          My sweet spot is the intersection of technical depth and product craft. I've diagnosed a critical heap leak that was consuming 3–5 GB of memory and brought it down to ~350 MB — the kind of problem that requires understanding the full Android stack, not just the surface layer.
-        </p>
-        <p>
-          I've led teams, driven hiring, mentored juniors on TDD and clean architecture, and delivered features end-to-end across global products. Currently on a short career break following knee surgery rehab — <strong class="text-violet-400">work-ready and available immediately.</strong>
-        </p>
-      </div>
-      <div class="grid grid-cols-2 gap-4 reveal">
-        <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-5 hover:border-violet-700 transition-colors">
-          <p class="text-3xl font-black text-violet-400 mb-1">11+</p>
-          <p class="text-zinc-400 text-sm">Years of Android development</p>
-        </div>
-        <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-5 hover:border-violet-700 transition-colors">
-          <p class="text-3xl font-black text-violet-400 mb-1">500M+</p>
-          <p class="text-zinc-400 text-sm">Users on apps I've worked on</p>
-        </div>
-        <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-5 hover:border-violet-700 transition-colors">
-          <p class="text-3xl font-black text-violet-400 mb-1">10+</p>
-          <p class="text-zinc-400 text-sm">Developers hired & mentored</p>
-        </div>
-        <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-5 hover:border-violet-700 transition-colors">
-          <p class="text-3xl font-black text-violet-400 mb-1">100%</p>
-          <p class="text-zinc-400 text-sm">Test coverage on LinkedIn Groups</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════ SKILLS ══════════════════════ -->
-<div class="glow-divider"></div>
-<section id="skills" class="py-24 px-6">
-  <div class="max-w-6xl mx-auto">
-    <p class="section-eyebrow mb-3 reveal">Technical Skills</p>
-    <h2 class="text-3xl sm:text-4xl font-bold text-zinc-100 mb-12 reveal">The full stack I work with</h2>
-
-    <div class="space-y-8">
-
-      <div class="reveal">
-        <p class="text-zinc-500 text-xs font-mono uppercase tracking-widest mb-4">// Languages</p>
-        <div class="flex flex-wrap gap-3">
-          <span class="skill-chip">Kotlin</span>
-          <span class="skill-chip">Java</span>
-          <span class="skill-chip">C++</span>
-          <span class="skill-chip">XML</span>
-        </div>
-      </div>
-
-      <div class="reveal">
-        <p class="text-zinc-500 text-xs font-mono uppercase tracking-widest mb-4">// Android Core</p>
-        <div class="flex flex-wrap gap-3">
-          <span class="skill-chip">Jetpack Compose</span>
-          <span class="skill-chip">MVVM</span>
-          <span class="skill-chip">Clean Architecture</span>
-          <span class="skill-chip">Coroutines</span>
-          <span class="skill-chip">Flows</span>
-          <span class="skill-chip">RxAndroid</span>
-          <span class="skill-chip">Room</span>
-          <span class="skill-chip">LiveData</span>
-          <span class="skill-chip">ViewModel</span>
-          <span class="skill-chip">Hilt</span>
-          <span class="skill-chip">Dagger</span>
-        </div>
-      </div>
-
-      <div class="reveal">
-        <p class="text-zinc-500 text-xs font-mono uppercase tracking-widest mb-4">// Specialised</p>
-        <div class="flex flex-wrap gap-3">
-          <span class="skill-chip">BLE / IoT</span>
-          <span class="skill-chip">ARCore</span>
-          <span class="skill-chip">Android NDK</span>
-          <span class="skill-chip">Kotlin Multiplatform</span>
-          <span class="skill-chip">WiFi Provisioning</span>
-        </div>
-      </div>
-
-      <div class="reveal">
-        <p class="text-zinc-500 text-xs font-mono uppercase tracking-widest mb-4">// Testing</p>
-        <div class="flex flex-wrap gap-3">
-          <span class="skill-chip">JUnit</span>
-          <span class="skill-chip">Espresso</span>
-          <span class="skill-chip">Mockito</span>
-          <span class="skill-chip">TDD</span>
-        </div>
-      </div>
-
-      <div class="reveal">
-        <p class="text-zinc-500 text-xs font-mono uppercase tracking-widest mb-4">// Tools & DevOps</p>
-        <div class="flex flex-wrap gap-3">
-          <span class="skill-chip">Android Studio</span>
-          <span class="skill-chip">Git</span>
-          <span class="skill-chip">JIRA</span>
-          <span class="skill-chip">Firebase Crashlytics</span>
-          <span class="skill-chip">Jenkins</span>
-          <span class="skill-chip">GitHub Copilot</span>
-          <span class="skill-chip">Gemini</span>
-          <span class="skill-chip">Claude</span>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════ EXPERIENCE ══════════════════════ -->
-<div class="glow-divider"></div>
-<section id="experience" class="py-24 px-6">
-  <div class="max-w-6xl mx-auto">
-    <p class="section-eyebrow mb-3 reveal">Work History</p>
-    <h2 class="text-3xl sm:text-4xl font-bold text-zinc-100 mb-12 reveal">11 years, globally recognised products</h2>
-
-    <ol class="relative space-y-10 list-none p-0 m-0">
-      <!-- Whirlpool -->
-      <li class="pl-8 relative reveal">
-        <div class="absolute left-0 top-2 w-4 h-4 rounded-full bg-violet-600 border-2 border-zinc-950 z-10"></div>
-        <div class="timeline-line"></div>
-        <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-6 hover:border-zinc-700 transition-colors">
-          <div class="flex flex-wrap items-start justify-between gap-3 mb-3">
-            <div>
-              <h3 class="font-bold text-zinc-100 text-lg">Senior Android Developer</h3>
-              <p class="text-violet-400 text-sm font-medium">Teamware Solutions · Client: Whirlpool India</p>
+    <div class="container">
+        
+        <div class="sidebar">
+            <div class="md-card">
+                <div class="profile-header">
+                    <h1 class="profile-name">Omkar Marne</h1>
+                    <div class="profile-title">Senior Android Developer</div>
+                    <div class="status-banner">
+                        <span class="material-icons" style="font-size:18px;">bolt</span>
+                        Available Immediately / Open to Remote
+                    </div>
+                </div>
+                
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span class="material-icons">place</span>
+                        <span>Pune, India</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="material-icons">email</span>
+                        <a href="mailto:omkar25marne@gmail.com">omkar25marne@gmail.com</a>
+                    </div>
+                    <div class="contact-item">
+                        <span class="material-icons">phone_android</span>
+                        <a href="tel:+919730898897">+91 97308 98897</a>
+                    </div>
+                    <div class="contact-item">
+                        <span class="material-icons">link</span>
+                        <a href="https://www.linkedin.com/in/omkar-marne/" target="_blank">linkedin.com/in/omkar-marne</a>
+                    </div>
+                    <div class="contact-item" style="margin-top: 24px; background: #fff3e0; padding: 8px; border-radius: 4px; border-left: 4px solid #ff9800;">
+                        <span class="material-icons" style="color: #e65100;">healing</span>
+                        <span style="font-size: 12px; color: #5d4037;"><strong>Jan 2026 - Present:</strong> Career break for complete Knee Surgery Rehab. Fully recovered & ready to code!</span>
+                    </div>
+                </div>
             </div>
-            <span class="tag">Aug 2023 – Dec 2025</span>
-          </div>
-          <ul class="text-zinc-400 text-sm space-y-2 leading-relaxed list-none p-0 m-0">
-            <li class="flex gap-2"><span class="text-violet-500 mt-0.5">▸</span><span>Diagnosed critical heap memory leak in Smart Cooktop module — reduced usage from <strong class="text-zinc-300">3–5 GB → ~350 MB</strong>, eliminating OOM crashes.</span></li>
-            <li class="flex gap-2"><span class="text-violet-500 mt-0.5">▸</span><span>Implemented Pet-Friendly Washing and Smart Cooktop features across Whirlpool, Maytag, and KitchenAid apps covering BLE pairing, WiFi provisioning, and cloud sync.</span></li>
-            <li class="flex gap-2"><span class="text-violet-500 mt-0.5">▸</span><span>Pilot participant for GitHub Copilot — team evaluation drove <strong class="text-zinc-300">org-wide adoption.</strong></span></li>
-          </ul>
-          <div class="flex flex-wrap gap-2 mt-4">
-            <span class="tag">Kotlin</span><span class="tag">BLE/IoT</span><span class="tag">MVVM</span><span class="tag">Jetpack Compose</span>
-          </div>
-        </div>
-      </li>
 
-      <!-- PTC -->
-      <li class="pl-8 relative reveal">
-        <div class="absolute left-0 top-2 w-4 h-4 rounded-full bg-violet-600 border-2 border-zinc-950 z-10"></div>
-        <div class="timeline-line"></div>
-        <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-6 hover:border-zinc-700 transition-colors">
-          <div class="flex flex-wrap items-start justify-between gap-3 mb-3">
-            <div>
-              <h3 class="font-bold text-zinc-100 text-lg">Senior Software Specialist</h3>
-              <p class="text-violet-400 text-sm font-medium">PTC Software · Vuforia View</p>
+            <div class="md-card">
+                <h2 class="section-title"><span class="material-icons">code</span>Technical Stack</h2>
+                
+                <div class="chip-title">Languages</div>
+                <div class="chip-group">
+                    <span class="md-chip tech-core">Kotlin</span>
+                    <span class="md-chip tech-core">Java</span>
+                    <span class="md-chip">C++</span>
+                    <span class="md-chip">XML</span>
+                    <span class="md-chip">SQL</span>
+                </div>
+
+                <div class="chip-title">Android Core & Architecture</div>
+                <div class="chip-group">
+                    <span class="md-chip tech-core">Jetpack Compose</span>
+                    <span class="md-chip tech-core">MVVM / Clean Arch</span>
+                    <span class="md-chip tech-core">Coroutines & Flows</span>
+                    <span class="md-chip">RxAndroid</span>
+                    <span class="md-chip">Dagger / Hilt</span>
+                    <span class="md-chip">Room</span>
+                    <span class="md-chip">ViewModel & LiveData</span>
+                </div>
+
+                <div class="chip-title">Specialized Domains</div>
+                <div class="chip-group">
+                    <span class="md-chip tech-spec">BLE / IoT</span>
+                    <span class="md-chip tech-spec">ARCore</span>
+                    <span class="md-chip tech-spec">Android NDK</span>
+                    <span class="md-chip tech-spec">Kotlin Multiplatform (KMP)</span>
+                </div>
+
+                <div class="chip-title">Testing & Tools</div>
+                <div class="chip-group">
+                    <span class="md-chip">TDD</span>
+                    <span class="md-chip">JUnit</span>
+                    <span class="md-chip">Espresso</span>
+                    <span class="md-chip">Mockito</span>
+                    <span class="md-chip">Git</span>
+                    <span class="md-chip">GitHub Copilot</span>
+                    <span class="md-chip">CI/CD Jenkins</span>
+                </div>
             </div>
-            <span class="tag">Apr 2021 – Dec 2022</span>
-          </div>
-          <ul class="text-zinc-400 text-sm space-y-2 leading-relaxed list-none p-0 m-0">
-            <li class="flex gap-2"><span class="text-violet-500 mt-0.5">▸</span><span>Built features for Vuforia View — enterprise AR app enabling real-time 3D visualisation of industrial assets for global field teams.</span></li>
-            <li class="flex gap-2"><span class="text-violet-500 mt-0.5">▸</span><span>Built performance-critical native modules using <strong class="text-zinc-300">ARCore and Android NDK (C++)</strong> for smooth 3D rendering on mobile hardware.</span></li>
-          </ul>
-          <div class="flex flex-wrap gap-2 mt-4">
-            <span class="tag">ARCore</span><span class="tag">NDK / C++</span><span class="tag">Kotlin</span>
-          </div>
         </div>
-      </li>
 
-      <!-- LinkedIn -->
-      <li class="pl-8 relative reveal">
-        <div class="absolute left-0 top-2 w-4 h-4 rounded-full bg-violet-600 border-2 border-zinc-950 z-10"></div>
-        <div class="timeline-line"></div>
-        <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-6 hover:border-zinc-700 transition-colors">
-          <div class="flex flex-wrap items-start justify-between gap-3 mb-3">
-            <div>
-              <h3 class="font-bold text-zinc-100 text-lg">Software Developer</h3>
-              <p class="text-violet-400 text-sm font-medium">Raja Software Labs · Client: LinkedIn</p>
+        <div class="main-content">
+            
+            <div class="md-card">
+                <h2 class="section-title"><span class="material-icons">account_circle</span>Professional Summary</h2>
+                <p style="font-size: 15px; color: var(--md-on-surface); text-align: justify;">
+                    Senior Android Developer with <strong>11 years of extensive experience</strong> designing and building high-scale consumer and enterprise mobile applications. Proven track record across globally recognized ecosystems including <strong>LinkedIn (500M+ users)</strong>, <strong>PTC Vuforia (Enterprise Augmented Reality)</strong>, and <strong>Whirlpool smart connected home appliances (BLE/IoT)</strong>. Expert in engineering robust, modern applications using modern Kotlin stacks, clean architectural baselines, and performance optimization.
+                </p>
             </div>
-            <span class="tag">Mar 2018 – Apr 2021</span>
-          </div>
-          <ul class="text-zinc-400 text-sm space-y-2 leading-relaxed list-none p-0 m-0">
-            <li class="flex gap-2"><span class="text-violet-500 mt-0.5">▸</span><span>Built LinkedIn Android Groups feature from scratch, end-to-end, with <strong class="text-zinc-300">100% test coverage</strong> (unit, UI, Espresso).</span></li>
-            <li class="flex gap-2"><span class="text-violet-500 mt-0.5">▸</span><span>Designed an internal shared UI component library, standardising patterns across screens.</span></li>
-            <li class="flex gap-2"><span class="text-violet-500 mt-0.5">▸</span><span>Led a team of up to 4 Android developers; drove end-to-end hiring of 10+ developers.</span></li>
-          </ul>
-          <div class="flex flex-wrap gap-2 mt-4">
-            <span class="tag">Kotlin</span><span class="tag">TDD</span><span class="tag">Espresso</span><span class="tag">MVVM</span>
-          </div>
-        </div>
-      </li>
 
-      <!-- Earlier roles condensed -->
-      <li class="pl-8 relative reveal">
-        <div class="absolute left-0 top-2 w-4 h-4 rounded-full bg-zinc-700 border-2 border-zinc-950 z-10"></div>
-        <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-6 hover:border-zinc-700 transition-colors">
-          <p class="text-zinc-400 text-sm mb-2">Earlier roles (2014–2023)</p>
-          <p class="text-zinc-300 text-sm leading-relaxed">KhulKe (live streaming social platform) · Aptara (hybrid app release pipeline) · YujIT Solutions (e-commerce, team lead) · Vspace Software (fleet management)</p>
-        </div>
-      </li>
-    </ol>
-  </div>
-</section>
+            <div class="md-card">
+                <h2 class="section-title"><span class="material-icons">work</span>Professional Experience</h2>
+                
+                <div class="experience-item">
+                    <h3 class="item-title">Teamware Solutions</h3>
+                    <div class="item-subtitle">Client: Whirlpool India Pvt. Ltd. | Senior Android Developer</div>
+                    <div class="item-meta">Aug 2023 - Dec 2025 | Pune, India</div>
+                    <ul class="bullet-list">
+                        <li><strong>Performance Optimization:</strong> Diagnosed and fixed a critical native heap memory leak in the Smart Cooktop feature module, slashing active runtime memory footprint down from 3-5GBs to ~350MBs, eliminating frequent Out-Of-Memory (OOM) exceptions.</li>
+                        <li><strong>IoT/BLE Product Engineering:</strong> Shipped complex user-facing features (Pet-Friendly Washing, Smart Cooktops) across international Whirlpool, Maytag, and KitchenAid companion apps utilizing BLE device pairing, local WiFi provisioning, and cloud sync APIs.</li>
+                        <li><strong>Platform Evolution:</strong> Contributed heavily to building next-generation white-label cross-brand systems, writing scalable architecture patterns with localized multi-language strings and modular feature distribution.</li>
+                        <li>Served as a pilot validator for organization-wide GitHub Copilot evaluation & adoption.</li>
+                    </ul>
+                </div>
 
-<!-- ══════════════════════ PROJECTS ══════════════════════ -->
-<div class="glow-divider"></div>
-<section id="projects" class="py-24 px-6">
-  <div class="max-w-6xl mx-auto">
-    <p class="section-eyebrow mb-3 reveal">Selected Work</p>
-    <h2 class="text-3xl sm:text-4xl font-bold text-zinc-100 mb-12 reveal">Apps shipped to production</h2>
+                <div class="experience-item">
+                    <h3 class="item-title">Loktantra Mediatech Pvt. Ltd.</h3>
+                    <div class="item-subtitle">Senior Android Developer</div>
+                    <div class="item-meta">Jan 2023 - Aug 2023 | Bengaluru, India (Remote)</div>
+                    <ul class="bullet-list">
+                        <li><strong>Feature Ownership:</strong> Built and optimized the critical live-streaming interaction viewport interface under tight latency constraints for a fast-paced interactive media platform.</li>
+                        <li>Managed end-to-end sprint coordination, technical cross-team scoping (with iOS, UI design, backend counterparts), and product release distributions.</li>
+                    </ul>
+                </div>
 
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="experience-item">
+                    <h3 class="item-title">PTC Software (India) Pvt. Ltd.</h3>
+                    <div class="item-subtitle">Senior Software Specialist</div>
+                    <div class="item-meta">Apr 2021 - Dec 2022 | Pune, India</div>
+                    <ul class="bullet-list">
+                        <li><strong>Enterprise AR Engineering:</strong> Maintained and evolved features for Vuforia View, a high-fidelity enterprise AR framework rendering 3D step-by-step CAD configurations over industrial machinery.</li>
+                        <li><strong>NDK Framework Development:</strong> Developed performance-focused native code blocks leveraging Google ARCore and low-level Android NDK (C++) pipelines to ensure smooth rendering threads.</li>
+                    </ul>
+                </div>
 
-      <!-- Whirlpool -->
-      <article class="project-card reveal">
-        <div class="project-img flex flex-col items-center justify-center gap-2">
-          <div class="text-5xl">🏠</div>
-          <p class="text-zinc-500 text-xs font-mono">Smart Home IoT</p>
-        </div>
-        <div class="p-5">
-          <div class="flex items-start justify-between gap-2 mb-2">
-            <h3 class="font-bold text-zinc-100">Whirlpool / KitchenAid / Maytag</h3>
-          </div>
-          <p class="text-zinc-400 text-sm leading-relaxed mb-4">BLE-connected smart appliance control — pet-friendly washing, smart cooktop, WiFi provisioning across three brand flavors. Fixed a critical 3–5 GB heap leak.</p>
-          <div class="flex flex-wrap gap-2 mb-4">
-            <span class="tag">Kotlin</span><span class="tag">BLE/IoT</span><span class="tag">Compose</span>
-          </div>
-          <div class="flex gap-2">
-            <a href="https://play.google.com/store/apps/details?id=com.whirlpool.android.cook" target="_blank" rel="noopener noreferrer" class="btn-outline text-xs py-2 px-3">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              Play Store
-            </a>
-          </div>
-        </div>
-      </article>
+                <div class="experience-item">
+                    <h3 class="item-title">Raja Software Labs</h3>
+                    <div class="item-subtitle">Client: LinkedIn | Software Developer</div>
+                    <div class="item-meta">Mar 2018 - Apr 2021 | Pune, India</div>
+                    <ul class="bullet-list">
+                        <li><strong>Product Execution:</strong> Built the LinkedIn Android Groups user landscape completely from the ground up, scaling to millions of daily concurrent users.</li>
+                        <li><strong>Test Driven Development:</strong> Enforced rigorous code standards, achieving 100% code coverage across unit, component, and functional layer automation scripts (Espresso, Mockito).</li>
+                        <li><strong>Design Engineering:</strong> Built unified internal interface component libraries used across core system features to secure theme continuity and complete digital accessibility guidelines.</li>
+                        <li>Screened, interviewed, and onboarded over 10 engineering candidates while leading explicit mentoring teams on robust MVVM and architecture paths.</li>
+                    </ul>
+                </div>
 
-      <!-- LinkedIn Groups -->
-      <article class="project-card reveal">
-        <div class="project-img flex flex-col items-center justify-center gap-2">
-          <div class="text-5xl">💼</div>
-          <p class="text-zinc-500 text-xs font-mono">500M+ Users</p>
-        </div>
-        <div class="p-5">
-          <h3 class="font-bold text-zinc-100 mb-2">LinkedIn Android · Groups</h3>
-          <p class="text-zinc-400 text-sm leading-relaxed mb-4">End-to-end development of the LinkedIn Groups feature with 100% test coverage (unit + UI + Espresso). Also built a shared UI component library used across screens.</p>
-          <div class="flex flex-wrap gap-2 mb-4">
-            <span class="tag">Kotlin</span><span class="tag">TDD</span><span class="tag">Espresso</span>
-          </div>
-          <div class="flex gap-2">
-            <a href="https://play.google.com/store/apps/details?id=com.linkedin.android" target="_blank" rel="noopener noreferrer" class="btn-outline text-xs py-2 px-3">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              Play Store
-            </a>
-          </div>
-        </div>
-      </article>
+                <div class="experience-item">
+                    <h3 class="item-title">Avsar HR Services</h3>
+                    <div class="item-subtitle">Client: Aptara New Media Pvt. Ltd. | Android Developer</div>
+                    <div class="item-meta">Oct 2017 - Mar 2018 | Pune, India</div>
+                    <ul class="bullet-list">
+                        <li>Managed application platform releases and store delivery pipelines for Cordova-based hybrid application environments.</li>
+                        <li>Resolved payment gateway interfaces, deep-linking errors, and local asset rendering bugs.</li>
+                    </ul>
+                </div>
 
-      <!-- Vuforia View -->
-      <article class="project-card reveal">
-        <div class="project-img flex flex-col items-center justify-center gap-2">
-          <div class="text-5xl">🥽</div>
-          <p class="text-zinc-500 text-xs font-mono">Enterprise AR</p>
-        </div>
-        <div class="p-5">
-          <h3 class="font-bold text-zinc-100 mb-2">PTC Vuforia View</h3>
-          <p class="text-zinc-400 text-sm leading-relaxed mb-4">Enterprise AR application for industrial field teams. Built performance-critical 3D rendering modules in C++ via Android NDK with ARCore for real-time asset visualisation.</p>
-          <div class="flex flex-wrap gap-2 mb-4">
-            <span class="tag">ARCore</span><span class="tag">NDK</span><span class="tag">C++</span>
-          </div>
-          <div class="flex gap-2">
-            <a href="https://play.google.com/store/apps/details?id=com.ptc.vuforiaview" target="_blank" rel="noopener noreferrer" class="btn-outline text-xs py-2 px-3">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              Play Store
-            </a>
-          </div>
-        </div>
-      </article>
+                <div class="experience-item">
+                    <h3 class="item-title">YujIT Solutions & Vspace Software</h3>
+                    <div class="item-subtitle">Senior Software Engineer / Android Developer</div>
+                    <div class="item-meta">Oct 2014 - Oct 2017 | Pune, India</div>
+                    <ul class="bullet-list">
+                        <li>Managed end-to-end SDLC workflows for multiple fleet management tracker tools and custom retail e-commerce applications using native Android SDK architectures.</li>
+                    </ul>
+                </div>
 
+            </div>
+
+            <div class="md-card">
+                <h2 class="section-title"><span class="material-icons">school</span>Education</h2>
+                <h3 class="item-title" style="font-size: 16px;">Bachelor of Engineering in Information Technology</h3>
+                <div class="item-subtitle" style="color: var(--md-on-surface);">Dr. D. Y. Patil College of Engineering, Ambi</div>
+                <div class="item-meta" style="margin-bottom: 0;">Savitribai Phule Pune University | 2010 - 2014</div>
+            </div>
+
+        </div>
     </div>
-  </div>
-</section>
 
-<!-- ══════════════════════ CONTACT ══════════════════════ -->
-<div class="glow-divider"></div>
-<section id="contact" class="py-24 px-6">
-  <div class="max-w-6xl mx-auto">
-    <p class="section-eyebrow mb-3 reveal">Get In Touch</p>
-    <h2 class="text-3xl sm:text-4xl font-bold text-zinc-100 mb-4 reveal">Let's build something great</h2>
-    <p class="text-zinc-400 max-w-lg mb-12 reveal">Available immediately for remote and on-site Android roles. Reach out directly or fill the form below.</p>
-
-    <div class="grid md:grid-cols-2 gap-12">
-
-      <!-- Left: form -->
-      <div class="reveal">
-        <form id="contact-form" novalidate class="space-y-4">
-          <div>
-            <label for="name" class="block text-zinc-300 text-sm font-medium mb-2">Name</label>
-            <input type="text" id="name" name="name" required placeholder="Your name" class="form-input" autocomplete="name" />
-          </div>
-          <div>
-            <label for="email" class="block text-zinc-300 text-sm font-medium mb-2">Email</label>
-            <input type="email" id="email" name="email" required placeholder="you@example.com" class="form-input" autocomplete="email" />
-          </div>
-          <div>
-            <label for="message" class="block text-zinc-300 text-sm font-medium mb-2">Message</label>
-            <textarea id="message" name="message" required rows="5" placeholder="What are you working on?" class="form-input resize-none"></textarea>
-          </div>
-          <button type="submit" class="btn-primary w-full justify-center" id="submit-btn">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-            Send Message
-          </button>
-          <p id="form-feedback" class="text-sm hidden" role="alert"></p>
-        </form>
-      </div>
-
-      <!-- Right: direct links -->
-      <div class="reveal space-y-6">
-        <div>
-          <p class="text-zinc-500 text-xs font-mono uppercase tracking-widest mb-4">// Direct Contact</p>
-          <div class="space-y-3">
-            <a href="mailto:marneomkar25@gmail.com" class="flex items-center gap-4 p-4 bg-zinc-900 border border-zinc-800 rounded-xl hover:border-violet-700 transition-colors group">
-              <div class="w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center flex-shrink-0 group-hover:bg-violet-900 transition-colors">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-              </div>
-              <div>
-                <p class="text-zinc-100 text-sm font-medium">Email</p>
-                <p class="text-zinc-500 text-xs">marneomkar25@gmail.com</p>
-              </div>
-            </a>
-            <a href="tel:+918208501428" class="flex items-center gap-4 p-4 bg-zinc-900 border border-zinc-800 rounded-xl hover:border-violet-700 transition-colors group">
-              <div class="w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center flex-shrink-0 group-hover:bg-violet-900 transition-colors">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-              </div>
-              <div>
-                <p class="text-zinc-100 text-sm font-medium">Phone</p>
-                <p class="text-zinc-500 text-xs">+91 82085 01428</p>
-              </div>
-            </a>
-            <a href="https://www.linkedin.com/in/omkar-marne/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 p-4 bg-zinc-900 border border-zinc-800 rounded-xl hover:border-violet-700 transition-colors group">
-              <div class="w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center flex-shrink-0 group-hover:bg-violet-900 transition-colors">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="#a78bfa" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-              </div>
-              <div>
-                <p class="text-zinc-100 text-sm font-medium">LinkedIn</p>
-                <p class="text-zinc-500 text-xs">linkedin.com/in/omkar-marne</p>
-              </div>
-            </a>
-          </div>
-        </div>
-
-        <div class="bg-violet-950 border border-violet-800 rounded-xl p-5">
-          <p class="text-violet-300 text-sm font-medium mb-1">🟢 Available Now</p>
-          <p class="text-violet-400 text-xs leading-relaxed">Completed knee surgery rehab. Open to remote and on-site Senior Android Developer roles starting immediately.</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-</main>
-
-<!-- ══════════════════════ FOOTER ══════════════════════ -->
-<div class="glow-divider"></div>
-<footer class="py-8 px-6">
-  <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-    <p class="text-zinc-500 text-sm">© <span id="year"></span> Omkar Marne. Built with care.</p>
-    <button onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top" class="flex items-center gap-2 text-zinc-500 hover:text-violet-400 text-sm transition-colors cursor-pointer">
-      Back to top
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>
-    </button>
-  </div>
-</footer>
-
-<!-- ══════════════════════ JS ══════════════════════ -->
-<script>
-  // ── Year ──
-  document.getElementById('year').textContent = new Date().getFullYear();
-
-  // ── Sticky nav ──
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 20);
-  }, { passive: true });
-
-  // ── Hamburger ──
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const lines = hamburger.querySelectorAll('.hamburger-line');
-
-  hamburger.addEventListener('click', () => {
-    const isOpen = mobileMenu.classList.toggle('open');
-    hamburger.setAttribute('aria-expanded', isOpen);
-    lines[0].style.transform = isOpen ? 'translateY(8px) rotate(45deg)' : '';
-    lines[1].style.opacity = isOpen ? '0' : '1';
-    lines[2].style.transform = isOpen ? 'translateY(-8px) rotate(-45deg)' : '';
-  });
-
-  // Close mobile menu on link click
-  mobileMenu.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => {
-      mobileMenu.classList.remove('open');
-      hamburger.setAttribute('aria-expanded', 'false');
-      lines[0].style.transform = '';
-      lines[1].style.opacity = '1';
-      lines[2].style.transform = '';
-    });
-  });
-
-  // ── Scroll reveal ──
-  const revealEls = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 80);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-  revealEls.forEach(el => observer.observe(el));
-
-  // ── Contact form ──
-  const form = document.getElementById('contact-form');
-  const feedback = document.getElementById('form-feedback');
-  const submitBtn = document.getElementById('submit-btn');
-
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const name = document.getElementById('name').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const message = document.getElementById('message').value.trim();
-    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!name || !email || !message) {
-      feedback.textContent = 'Please fill in all fields.';
-      feedback.className = 'text-sm text-red-400 block mt-2';
-      return;
-    }
-    if (!emailRe.test(email)) {
-      feedback.textContent = 'Please enter a valid email address.';
-      feedback.className = 'text-sm text-red-400 block mt-2';
-      return;
-    }
-
-    // Build mailto link as a fallback (no backend needed for GitHub Pages)
-    const subject = encodeURIComponent(`Portfolio enquiry from ${name}`);
-    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
-    window.location.href = `mailto:marneomkar25@gmail.com?subject=${subject}&body=${body}`;
-
-    feedback.textContent = '✓ Opening your mail client…';
-    feedback.className = 'text-sm text-violet-400 block mt-2';
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Sent!';
-    setTimeout(() => {
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Send Message`;
-      feedback.className = 'text-sm hidden';
-      form.reset();
-    }, 3000);
-  });
-</script>
 </body>
 </html>
