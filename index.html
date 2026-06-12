@@ -3,29 +3,503 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Professional Portfolio</title>
+
+    <title>Omkar Marne | Senior Android Developer</title>
+    <meta name="description" content="Portfolio of Omkar Marne - Senior Android Developer specializing in Kotlin, Jetpack Compose, Clean Architecture, BLE, IoT and AR.">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        accent: "#a855f7",
+                        neon: "#10b981"
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #333; }
-        h1 { color: #0066cc; }
-        .project-card { border: 1px solid #ddd; padding: 15px; margin: 15px 0; border-radius: 5px; }
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .glow:hover {
+            box-shadow: 0 0 25px rgba(168,85,247,0.35);
+            transform: translateY(-5px);
+        }
+
+        .card {
+            transition: all .3s ease;
+        }
+
+        .gradient-text {
+            background: linear-gradient(
+                90deg,
+                #a855f7,
+                #10b981
+            );
+            -webkit-background-clip: text;
+            color: transparent;
+        }
     </style>
 </head>
-<body>
-    <header>
-        <h1>Welcome to My Portfolio</h1>
-        <p>Software Developer | Tech Enthusiast</p>
-    </header>
-    <hr>
-    <section>
-        <h2>About Me</h2>
-        <p>Hi! I build mobile applications and custom software solutions. Take a look at some of my recent work below.</p>
-    </section>
-    <section>
-        <h2>Featured Projects</h2>
-        <div class="project-card">
-            <h3>Project Name 1</h3>
-            <p>A brief description of what this application does, the tech stack used, and key features.</p>
-        </div>
-    </section>
+
+
+<body class="bg-zinc-950 text-zinc-200">
+
+
+<!-- HEADER -->
+
+<header class="fixed top-0 w-full z-50 bg-zinc-950/80 backdrop-blur border-b border-zinc-800">
+
+<nav class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+
+<a href="#" class="text-xl font-bold gradient-text">
+    Omkar.dev
+</a>
+
+
+<button id="menuBtn"
+class="md:hidden text-2xl">
+☰
+</button>
+
+
+<ul id="menu"
+class="hidden md:flex gap-8 text-sm">
+
+<li><a href="#home" class="hover:text-purple-400">Home</a></li>
+<li><a href="#about" class="hover:text-purple-400">About</a></li>
+<li><a href="#projects" class="hover:text-purple-400">Projects</a></li>
+<li><a href="#contact" class="hover:text-purple-400">Contact</a></li>
+
+</ul>
+
+
+</nav>
+
+
+<div id="mobileMenu"
+class="hidden md:hidden px-6 pb-5">
+
+<a href="#home" class="block py-2">Home</a>
+<a href="#about" class="block py-2">About</a>
+<a href="#projects" class="block py-2">Projects</a>
+<a href="#contact" class="block py-2">Contact</a>
+
+</div>
+
+
+</header>
+
+
+
+<main>
+
+
+<!-- HERO -->
+
+<section id="home"
+class="min-h-screen flex items-center max-w-6xl mx-auto px-6 pt-20">
+
+
+<div class="grid md:grid-cols-2 gap-12 items-center">
+
+
+<div>
+
+<p class="text-emerald-400 mb-4">
+Hello, I'm
+</p>
+
+
+<h1 class="text-5xl md:text-7xl font-black leading-tight">
+
+Omkar
+<span class="gradient-text">
+Marne
+</span>
+
+</h1>
+
+
+<h2 class="text-2xl mt-5 text-zinc-300">
+
+Senior Android Developer
+
+</h2>
+
+
+<p class="mt-6 text-zinc-400 max-w-xl">
+
+11+ years building scalable Android applications.
+Experienced with Kotlin, Jetpack Compose, Clean Architecture,
+BLE/IoT, ARCore and high-performance consumer apps.
+
+</p>
+
+
+<a href="#projects"
+class="inline-block mt-8 px-8 py-3 rounded-full bg-purple-600 hover:bg-purple-500 transition">
+
+View My Work
+
+</a>
+
+
+</div>
+
+
+
+<div class="flex justify-center">
+
+<div class="w-72 h-72 rounded-full border border-purple-500/40
+flex items-center justify-center
+bg-zinc-900">
+
+<div class="text-center">
+
+<div class="text-6xl">
+📱
+</div>
+
+<p class="mt-3 text-zinc-400">
+Android Engineer
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+
+<!-- ABOUT -->
+
+<section id="about"
+class="max-w-6xl mx-auto px-6 py-20">
+
+
+<h2 class="text-4xl font-bold mb-10">
+About Me
+</h2>
+
+
+<p class="text-zinc-400 max-w-4xl leading-relaxed">
+
+Senior Android Developer with experience working on globally recognised
+products including LinkedIn Android, Whirlpool smart appliances and
+PTC Vuforia AR applications.
+
+Passionate about clean architecture, performance optimisation,
+testing and mentoring Android teams.
+
+</p>
+
+
+</section>
+
+
+
+
+
+<!-- SKILLS -->
+
+
+<section class="max-w-6xl mx-auto px-6 py-20">
+
+
+<h2 class="text-4xl font-bold mb-10">
+Skills
+</h2>
+
+
+<div class="grid grid-cols-2 md:grid-cols-4 gap-5">
+
+
+<div class="p-5 bg-zinc-900 rounded-xl border border-zinc-800">
+Kotlin
+</div>
+
+
+<div class="p-5 bg-zinc-900 rounded-xl border border-zinc-800">
+Jetpack Compose
+</div>
+
+
+<div class="p-5 bg-zinc-900 rounded-xl border border-zinc-800">
+MVVM / Clean Architecture
+</div>
+
+
+<div class="p-5 bg-zinc-900 rounded-xl border border-zinc-800">
+BLE / IoT
+</div>
+
+
+<div class="p-5 bg-zinc-900 rounded-xl border border-zinc-800">
+ARCore
+</div>
+
+
+<div class="p-5 bg-zinc-900 rounded-xl border border-zinc-800">
+Android NDK
+</div>
+
+
+<div class="p-5 bg-zinc-900 rounded-xl border border-zinc-800">
+TDD / Espresso
+</div>
+
+
+<div class="p-5 bg-zinc-900 rounded-xl border border-zinc-800">
+Kotlin Multiplatform
+</div>
+
+
+</div>
+
+</section>
+
+
+
+
+
+<!-- PROJECTS -->
+
+
+<section id="projects"
+class="max-w-6xl mx-auto px-6 py-20">
+
+
+<h2 class="text-4xl font-bold mb-10">
+Featured Projects
+</h2>
+
+
+
+<div class="grid md:grid-cols-3 gap-8">
+
+
+
+<article class="card glow bg-zinc-900 rounded-2xl p-6 border border-zinc-800">
+
+
+<div class="text-4xl">
+💼
+</div>
+
+
+<h3 class="text-xl font-bold mt-4">
+LinkedIn Android
+</h3>
+
+
+<p class="text-zinc-400 mt-3">
+
+Built LinkedIn Groups feature from scratch with
+100% test coverage and scalable architecture.
+
+</p>
+
+
+<a href="https://play.google.com/store/apps/details?id=com.linkedin.android"
+class="inline-block mt-5 text-emerald-400">
+
+▶ Play Store
+
+</a>
+
+</article>
+
+
+
+
+<article class="card glow bg-zinc-900 rounded-2xl p-6 border border-zinc-800">
+
+
+<div class="text-4xl">
+🏠
+</div>
+
+
+<h3 class="text-xl font-bold mt-4">
+Whirlpool Smart Appliances
+</h3>
+
+
+<p class="text-zinc-400 mt-3">
+
+BLE enabled smart appliances with WiFi provisioning,
+cloud sync and multi-brand support.
+
+</p>
+
+
+<a href="#"
+class="inline-block mt-5 text-emerald-400">
+
+▶ Play Store
+
+</a>
+
+</article>
+
+
+
+
+
+<article class="card glow bg-zinc-900 rounded-2xl p-6 border border-zinc-800">
+
+
+<div class="text-4xl">
+🥽
+</div>
+
+
+<h3 class="text-xl font-bold mt-4">
+Vuforia View
+</h3>
+
+
+<p class="text-zinc-400 mt-3">
+
+Enterprise AR application using ARCore and Android NDK
+for real-time 3D visualisation.
+
+</p>
+
+
+<a href="#"
+class="inline-block mt-5 text-emerald-400">
+
+▶ Play Store
+
+</a>
+
+
+</article>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+<!-- CONTACT -->
+
+
+<section id="contact"
+class="max-w-6xl mx-auto px-6 py-20 text-center">
+
+
+<h2 class="text-4xl font-bold">
+Let's Connect
+</h2>
+
+
+<p class="mt-5 text-zinc-400">
+Open for Senior Android Developer opportunities.
+</p>
+
+
+
+<div class="mt-8 flex justify-center gap-8 text-3xl">
+
+
+<a href="mailto:omkar25marne@gmail.com">
+✉️
+</a>
+
+
+<a href="https://linkedin.com/in/omkar-marne">
+💼
+</a>
+
+
+<a href="https://github.com">
+🐙
+</a>
+
+
+</div>
+
+
+</section>
+
+
+
+</main>
+
+
+
+
+
+<footer class="border-t border-zinc-800 py-8 text-center text-zinc-500">
+
+
+<p>
+© 2026 Omkar Marne. All rights reserved.
+</p>
+
+
+<a href="#home"
+class="block mt-3 text-purple-400">
+
+↑ Back to Top
+
+</a>
+
+
+</footer>
+
+
+
+
+
+<script>
+
+const menuBtn = document.getElementById("menuBtn");
+const mobileMenu = document.getElementById("mobileMenu");
+
+
+menuBtn.addEventListener("click",()=>{
+
+mobileMenu.classList.toggle("hidden");
+
+});
+
+
+document.querySelectorAll("#mobileMenu a")
+.forEach(link=>{
+
+link.addEventListener("click",()=>{
+
+mobileMenu.classList.add("hidden");
+
+});
+
+});
+
+
+</script>
+
+
 </body>
 </html>
