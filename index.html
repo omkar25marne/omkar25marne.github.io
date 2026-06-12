@@ -1,1392 +1,811 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Omkar Marne — Senior Android Developer. 11 years building apps used by millions. Kotlin, Jetpack Compose, BLE/IoT, ARCore." />
+  <title>Omkar Marne — Senior Android Developer</title>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
-<title>
-Omkar Marne | Senior Android Developer
-</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
 
+    :root {
+      --bg:       #F8F8F6;
+      --ink:      #111110;
+      --ink-2:    #3A3A38;
+      --ink-3:    #6B6B6B;
+      --border:   #E2E2DF;
+      --accent:   #3B5BDB;
+      --break-bg: #F0F3FF;
+      --chip-bg:  #EFEFED;
+      --max:      720px;
+    }
 
-<meta name="description"
-content="Senior Android Developer with 11+ years experience in Kotlin, Jetpack Compose, BLE, IoT, ARCore and scalable Android applications.">
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-size: 1rem;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
 
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
 
-<script src="https://cdn.tailwindcss.com"></script>
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
 
+    /* ── Nav ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(248,248,246,0.93);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: var(--max); margin: 0 auto; padding: 0 24px;
+      height: 56px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-name { font-weight: 600; font-size: 0.95rem; color: var(--ink); letter-spacing: -0.01em; text-decoration: none; }
+    .nav-name:hover { text-decoration: none; color: var(--ink); }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { font-size: 0.875rem; color: var(--ink-3); text-decoration: none; font-weight: 400; transition: color 0.15s; }
+    .nav-links a:hover { color: var(--ink); text-decoration: none; }
 
-<script>
+    .nav-hamburger {
+      display: none; flex-direction: column; justify-content: center;
+      gap: 5px; width: 32px; height: 32px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+    }
+    .nav-hamburger span {
+      display: block; height: 1.5px; background: var(--ink);
+      border-radius: 2px; transition: all 0.25s ease; transform-origin: center;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
-tailwind.config = {
+    .nav-mobile { display: none; background: var(--bg); border-bottom: 1px solid var(--border); }
+    .nav-mobile.open { display: block; }
+    .nav-mobile ul { list-style: none; max-width: var(--max); margin: 0 auto; padding: 12px 24px 16px; display: flex; flex-direction: column; gap: 2px; }
+    .nav-mobile a { display: block; padding: 8px 0; font-size: 0.95rem; color: var(--ink-2); text-decoration: none; border-bottom: 1px solid var(--border); }
+    .nav-mobile li:last-child a { border-bottom: none; }
 
-theme: {
+    /* ── Sections ── */
+    section { padding: 72px 0; }
+    section + section { border-top: 1px solid var(--border); }
 
-extend: {
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--ink-3); margin-bottom: 32px;
+    }
 
-colors: {
+    /* ── Hero ── */
+    #hero { padding: 88px 0 72px; }
+    .hero-name { font-size: clamp(2.2rem, 6vw, 3.2rem); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; color: var(--ink); margin-bottom: 14px; }
+    .hero-title { font-size: 1.1rem; font-weight: 400; color: var(--ink-3); margin-bottom: 22px; }
+    .hero-summary { font-size: 1.05rem; color: var(--ink-2); line-height: 1.75; max-width: 600px; margin-bottom: 28px; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 16px 24px; font-size: 0.875rem; color: var(--ink-3); }
+    .hero-meta-item { display: flex; align-items: center; gap: 6px; }
+    .hero-meta-item svg { flex-shrink: 0; }
 
-accent:"#a855f7",
-neon:"#10b981"
+    /* ── Career break callout ── */
+    .break-callout {
+      margin-top: 32px;
+      border-left: 3px solid var(--accent);
+      background: var(--break-bg);
+      border-radius: 0 8px 8px 0;
+      padding: 14px 18px;
+    }
+    .break-callout-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 5px;
+    }
+    .break-callout p { font-size: 0.9rem; color: var(--ink-2); line-height: 1.6; }
+    .break-callout strong { color: var(--ink); font-weight: 500; }
 
-}
+    /* ── Apps grid ── */
+    .app-grid {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 20px 12px;
+    }
+    @media (max-width: 600px) { .app-grid { grid-template-columns: repeat(4, 1fr); } }
+    @media (max-width: 400px) { .app-grid { grid-template-columns: repeat(3, 1fr); } }
 
-}
+    .app-card {
+      display: flex; flex-direction: column;
+      align-items: center; text-align: center; gap: 7px;
+    }
+    .app-card--dim .app-icon-wrap { opacity: 0.4; }
+    .app-card--dim .app-card-name { color: var(--ink-3); }
 
-}
+    .app-icon-wrap {
+      width: 64px; height: 64px;
+      border-radius: 16px; overflow: hidden;
+      background: var(--chip-bg); border: 1px solid var(--border);
+      flex-shrink: 0; position: relative;
+    }
+    /* img is hidden until JS sets src and it loads */
+    .app-icon {
+      width: 100%; height: 100%; object-fit: cover;
+      display: none; border-radius: 15px; position: relative; z-index: 1;
+    }
+    .app-icon.loaded { display: block; }
+    .app-icon-fallback {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem; font-weight: 500; color: var(--ink-3);
+      background: var(--chip-bg); border-radius: 15px; z-index: 0;
+    }
+    .app-icon.loaded + .app-icon-fallback { display: none; }
 
-}
+    .app-card-name { font-size: 0.78rem; font-weight: 500; color: var(--ink); line-height: 1.3; }
+    .app-card-ctx  { font-size: 0.67rem; color: var(--ink-3); line-height: 1.3; }
+    .app-card-links { display: flex; gap: 5px; align-items: center; flex-wrap: wrap; justify-content: center; margin-top: 1px; }
 
-</script>
+    /* Play Store / App Store badge — icon only square button */
+    .store-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 26px; height: 26px;
+      border-radius: 6px; border: 1px solid var(--border);
+      background: var(--chip-bg); text-decoration: none;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .store-btn svg { width: 13px; height: 13px; fill: var(--ink-3); transition: fill 0.15s; }
+    .store-btn.ps:hover { border-color: #01875f; background: #e8f5e9; }
+    .store-btn.ps:hover svg { fill: #01875f; }
+    .store-btn.as:hover { border-color: #444; background: #f0f0f0; }
+    .store-btn.as:hover svg { fill: #333; }
+    .store-na { font-size: 0.62rem; font-family: 'DM Mono', monospace; color: #ccc; letter-spacing: 0.03em; }
 
+    /* ── Experience timeline ── */
+    .exp-list { list-style: none; }
+    .exp-item { position: relative; padding-left: 20px; padding-bottom: 44px; }
+    .exp-item:last-child { padding-bottom: 0; }
+    .exp-item::before { content: ''; position: absolute; left: 0; top: 8px; bottom: -8px; width: 1px; background: var(--border); }
+    .exp-item:last-child::before { display: none; }
+    .exp-item::after { content: ''; position: absolute; left: -3px; top: 7px; width: 7px; height: 7px; border-radius: 50%; background: var(--ink-3); border: 2px solid var(--bg); box-shadow: 0 0 0 1px var(--border); }
 
-<style>
+    .exp-header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; margin-bottom: 4px; }
+    .exp-role { font-weight: 600; font-size: 0.98rem; color: var(--ink); }
+    .exp-date { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--ink-3); white-space: nowrap; }
+    .exp-company { font-size: 0.875rem; color: var(--ink-3); margin-bottom: 12px; }
+    .exp-bullets { list-style: none; }
+    .exp-bullets li { font-size: 0.9rem; color: var(--ink-2); line-height: 1.65; padding-left: 14px; position: relative; margin-bottom: 6px; }
+    .exp-bullets li::before { content: '–'; position: absolute; left: 0; color: var(--ink-3); }
+    .exp-app { margin-top: 10px; font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--ink-3); }
+    .exp-app a { color: var(--ink-3); }
+    .exp-app a:hover { color: var(--accent); }
 
-html {
-scroll-behavior:smooth;
-}
+    /* Collapsible older roles */
+    .exp-toggle-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: none; border: none; cursor: pointer; padding: 0;
+      font-family: 'DM Sans', sans-serif; font-size: 0.875rem; color: var(--ink-3);
+      margin-top: 4px;
+    }
+    .exp-toggle-btn:hover { color: var(--ink); }
+    .exp-toggle-btn svg { transition: transform 0.25s ease; }
+    .exp-toggle-btn[aria-expanded="true"] svg { transform: rotate(180deg); }
+    .exp-collapsible { overflow: hidden; max-height: 0; transition: max-height 0.4s ease; }
+    .exp-collapsible.open { max-height: 1400px; }
 
+    /* ── Skills ── */
+    .skill-group { margin-bottom: 24px; }
+    .skill-group-label { font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 10px; }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { background: var(--chip-bg); color: var(--ink-2); font-size: 0.82rem; padding: 5px 12px; border-radius: 100px; font-family: 'DM Mono', monospace; }
 
-.gradient-text {
+    /* ── Education ── */
+    .edu-degree { font-weight: 600; font-size: 0.98rem; color: var(--ink); }
+    .edu-school { font-size: 0.9rem; color: var(--ink-2); margin-top: 3px; }
+    .edu-meta { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--ink-3); margin-top: 4px; }
 
-background:linear-gradient(
-90deg,
-#a855f7,
-#10b981
-);
+    /* ── Contact ── */
+    .contact-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .contact-item { display: flex; align-items: center; gap: 12px; font-size: 0.95rem; color: var(--ink-2); }
+    .contact-icon { width: 36px; height: 36px; border-radius: 8px; background: var(--chip-bg); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--ink-3); }
+    .contact-item a { color: var(--ink-2); }
+    .contact-item a:hover { color: var(--accent); }
 
--webkit-background-clip:text;
-color:transparent;
+    /* ── Footer ── */
+    footer { border-top: 1px solid var(--border); padding: 28px 0; text-align: center; font-size: 0.82rem; color: var(--ink-3); }
+    footer a { color: var(--ink-3); }
+    footer a:hover { color: var(--accent); }
 
-}
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      section { padding: 56px 0; }
+      #hero { padding: 64px 0 56px; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+    }
 
-
-.card {
-
-transition:.35s ease;
-
-}
-
-
-.card:hover {
-
-transform:translateY(-8px);
-
-box-shadow:
-0 0 30px rgba(168,85,247,.25);
-
-}
-
-
-.timeline-line {
-
-border-left:
-2px solid #27272a;
-
-}
-
-
-</style>
-
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+    }
+  </style>
 </head>
+<body>
 
-
-
-<body class="bg-zinc-950 text-zinc-200">
-
-
-
-<header
-class="fixed top-0 w-full z-50 backdrop-blur bg-zinc-950/80 border-b border-zinc-800">
-
-
-<nav
-class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-
-
-<a href="#home"
-class="text-2xl font-bold gradient-text">
-
-Omkar.dev
-
-</a>
-
-
-
-<button
-id="menuBtn"
-class="md:hidden text-2xl">
-
-☰
-
-</button>
-
-
-
-<ul
-id="desktopMenu"
-class="hidden md:flex gap-8 text-sm">
-
-
-<li>
-<a href="#home" class="hover:text-purple-400">
-Home
-</a>
-</li>
-
-
-<li>
-<a href="#about" class="hover:text-purple-400">
-About
-</a>
-</li>
-
-
-<li>
-<a href="#experience" class="hover:text-purple-400">
-Experience
-</a>
-</li>
-
-
-<li>
-<a href="#projects" class="hover:text-purple-400">
-Projects
-</a>
-</li>
-
-
-<li>
-<a href="#contact" class="hover:text-purple-400">
-Contact
-</a>
-</li>
-
-
-</ul>
-
-
+<!-- ── Navigation ── -->
+<nav aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-name">Omkar Marne</a>
+    <ul class="nav-links" role="list">
+      <li><a href="#apps">Apps</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-nav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
-
-
-
-<div
-id="mobileMenu"
-class="hidden px-6 pb-5 md:hidden">
-
-
-<a href="#home" class="block py-2">
-Home
-</a>
-
-<a href="#about" class="block py-2">
-About
-</a>
-
-<a href="#experience" class="block py-2">
-Experience
-</a>
-
-<a href="#projects" class="block py-2">
-Projects
-</a>
-
-<a href="#contact" class="block py-2">
-Contact
-</a>
-
-
+<div class="nav-mobile" id="mobile-nav" role="menu">
+  <ul>
+    <li><a href="#apps"       role="menuitem">Apps</a></li>
+    <li><a href="#experience" role="menuitem">Experience</a></li>
+    <li><a href="#skills"     role="menuitem">Skills</a></li>
+    <li><a href="#education"  role="menuitem">Education</a></li>
+    <li><a href="#contact"    role="menuitem">Contact</a></li>
+  </ul>
 </div>
-
-
-</header>
-
-
-
-
 
 <main>
 
-
-
-
-
-<!-- HERO -->
-
-
-<section
-id="home"
-class="min-h-screen flex items-center max-w-6xl mx-auto px-6 pt-24">
-
-
-<div class="grid md:grid-cols-2 gap-12 items-center">
-
-
-<div>
-
-
-<p class="text-emerald-400 mb-5">
-
-Hello, I'm
-
-</p>
-
-
-
-<h1
-class="text-6xl md:text-7xl font-black">
-
-
-Omkar
-
-<span class="gradient-text">
-Marne
-</span>
-
-
-</h1>
-
-
-
-<h2
-class="text-2xl mt-6 text-zinc-300">
-
-
-Senior Android Developer
-
-
-</h2>
-
-
-
-
-<p
-class="mt-6 text-zinc-400 leading-relaxed">
-
-
-11+ years building consumer and enterprise Android
-applications used at global scale.
-
-Specialised in Kotlin, Jetpack Compose,
-Clean Architecture, BLE/IoT and AR.
-
-
-</p>
-
-
-
-
-<a
-href="#projects"
-class="inline-block mt-8 px-8 py-3 rounded-full bg-purple-600 hover:bg-purple-500">
-
-
-View My Work
-
-
-</a>
-
-
-</div>
-
-
-
-
-
-<div
-class="flex justify-center">
-
-
-<div
-class="w-80 h-80 rounded-full bg-zinc-900 border border-purple-500/40 flex items-center justify-center">
-
-
-<div class="text-center">
-
-
-<div class="text-7xl">
-📱
-</div>
-
-
-<p class="mt-4 text-zinc-400">
-
-Android Engineer
-
-</p>
-
-
-</div>
-
-
-</div>
-
-
-</div>
-
-
-
-</div>
-
-
+<!-- ══════════════════════════════════════
+     HERO
+     ══════════════════════════════════════ -->
+<section id="hero" aria-label="Introduction">
+  <div class="wrap">
+    <h1 class="hero-name">Omkar Marne</h1>
+    <p class="hero-title">Senior Android Developer</p>
+    <p class="hero-summary">
+      11 years building Android apps used by hundreds of millions — LinkedIn, Whirlpool, PTC Vuforia.
+      Specialised in Kotlin, Jetpack Compose, BLE/IoT, and ARCore.
+      Track record of leading teams, diagnosing hard performance issues, and shipping on time.
+    </p>
+    <div class="hero-meta">
+      <span class="hero-meta-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Pune, India
+      </span>
+      <span class="hero-meta-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        <a href="mailto:omkar25marne@gmail.com">omkar25marne@gmail.com</a>
+      </span>
+      <span class="hero-meta-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <a href="tel:+919730898897">+91 97308 98897</a>
+      </span>
+      <span class="hero-meta-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        <a href="https://linkedin.com/in/omkar-marne/" target="_blank" rel="noopener noreferrer">linkedin.com/in/omkar-marne</a>
+      </span>
+    </div>
+
+    <div class="break-callout" role="note" aria-label="Career break note">
+      <p class="break-callout-label">Career break &middot; Since January 2026</p>
+      <p>Taking time for knee surgery rehabilitation. Recovery is complete &mdash; <strong>available immediately</strong> for remote and on-site Senior Android roles.</p>
+    </div>
+  </div>
 </section>
 
 
-
-
-
-
-
-
-<!-- COUNTERS -->
-
-
-<section
-class="max-w-6xl mx-auto px-6 py-12">
-
-
-<div
-class="grid grid-cols-2 md:grid-cols-4 gap-6">
-
-
-<div class="bg-zinc-900 rounded-xl p-6 text-center border border-zinc-800">
-
-
-<h3
-class="counter text-4xl font-bold gradient-text"
-data-target="11">
-
-0
-
-</h3>
-
-
-<p class="text-zinc-400 mt-2">
-Years Experience
-</p>
-
-
-</div>
-
-
-
-
-<div class="bg-zinc-900 rounded-xl p-6 text-center border border-zinc-800">
-
-
-<h3
-class="counter text-4xl font-bold gradient-text"
-data-target="500">
-
-0
-
-</h3>
-
-
-<p class="text-zinc-400 mt-2">
-
-Million+ Users
-
-</p>
-
-
-</div>
-
-
-
-
-
-<div class="bg-zinc-900 rounded-xl p-6 text-center border border-zinc-800">
-
-
-<h3
-class="counter text-4xl font-bold gradient-text"
-data-target="10">
-
-0
-
-</h3>
-
-
-<p class="text-zinc-400 mt-2">
-
-Developers Mentored
-
-</p>
-
-
-</div>
-
-
-
-
-
-<div class="bg-zinc-900 rounded-xl p-6 text-center border border-zinc-800">
-
-
-<h3
-class="counter text-4xl font-bold gradient-text"
-data-target="5">
-
-0
-
-</h3>
-
-
-<p class="text-zinc-400 mt-2">
-
-Team Size Handled
-
-</p>
-
-
-</div>
-
-
-</div>
-
-
+<!-- ══════════════════════════════════════
+     APPS
+     Icons loaded at runtime via iTunes Lookup API.
+     Apps without an iTunes ID show a monogram fallback.
+     ══════════════════════════════════════ -->
+<section id="apps" aria-labelledby="apps-heading">
+  <div class="wrap">
+    <p class="section-label" id="apps-heading">Applications</p>
+    <ul class="app-grid" id="app-grid" aria-label="Apps I have worked on">
+
+      <!-- Whirlpool · iTunes id=1011622189 -->
+      <li class="app-card">
+        <div class="app-icon-wrap">
+          <img class="app-icon" data-itunes="1011622189" alt="Whirlpool icon" />
+          <div class="app-icon-fallback" aria-hidden="true">W</div>
+        </div>
+        <p class="app-card-name">Whirlpool&reg;</p>
+        <p class="app-card-ctx">Smart appliances</p>
+        <div class="app-card-links">
+          <a class="store-btn ps" href="https://play.google.com/store/apps/details?id=com.whirlpool.android.wpapp" target="_blank" rel="noopener noreferrer" aria-label="Whirlpool on Play Store" title="Play Store">
+            <!-- Google Play icon -->
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.18 23.76c.3.17.64.22.99.14l13.18-7.62-2.9-2.9-11.27 10.38zm-1.5-20.7A1.74 1.74 0 0 0 1.5 4v16c0 .38.1.72.18 1.02L14.1 8.1 1.68 3.06zm19.35 8.26-3.06-1.77-3.23 3.23 3.23 3.22 3.1-1.79a1.75 1.75 0 0 0 0-2.89zM4.17.24 17.35 7.86l-2.9 2.9L3.18.38A1.7 1.7 0 0 1 4.17.24z"/></svg>
+          </a>
+        </div>
+      </li>
+
+      <!-- KitchenAid · no iTunes ID found, Play only -->
+      <li class="app-card">
+        <div class="app-icon-wrap">
+          <img class="app-icon" data-itunes="0" alt="KitchenAid icon" />
+          <div class="app-icon-fallback" aria-hidden="true">KA</div>
+        </div>
+        <p class="app-card-name">KitchenAid&reg;</p>
+        <p class="app-card-ctx">Smart kitchen</p>
+        <div class="app-card-links">
+          <a class="store-btn ps" href="https://play.google.com/store/apps/details?id=com.nar.android.kitchenaid.kaapp" target="_blank" rel="noopener noreferrer" aria-label="KitchenAid on Play Store" title="Play Store">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.18 23.76c.3.17.64.22.99.14l13.18-7.62-2.9-2.9-11.27 10.38zm-1.5-20.7A1.74 1.74 0 0 0 1.5 4v16c0 .38.1.72.18 1.02L14.1 8.1 1.68 3.06zm19.35 8.26-3.06-1.77-3.23 3.23 3.23 3.22 3.1-1.79a1.75 1.75 0 0 0 0-2.89zM4.17.24 17.35 7.86l-2.9 2.9L3.18.38A1.7 1.7 0 0 1 4.17.24z"/></svg>
+          </a>
+        </div>
+      </li>
+
+      <!-- Maytag · no iTunes ID found, Play only -->
+      <li class="app-card">
+        <div class="app-icon-wrap">
+          <img class="app-icon" data-itunes="0" alt="Maytag icon" />
+          <div class="app-icon-fallback" aria-hidden="true">MT</div>
+        </div>
+        <p class="app-card-name">Maytag&reg;</p>
+        <p class="app-card-ctx">Smart laundry</p>
+        <div class="app-card-links">
+          <a class="store-btn ps" href="https://play.google.com/store/apps/details?id=com.maytag.android.mtapp" target="_blank" rel="noopener noreferrer" aria-label="Maytag on Play Store" title="Play Store">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.18 23.76c.3.17.64.22.99.14l13.18-7.62-2.9-2.9-11.27 10.38zm-1.5-20.7A1.74 1.74 0 0 0 1.5 4v16c0 .38.1.72.18 1.02L14.1 8.1 1.68 3.06zm19.35 8.26-3.06-1.77-3.23 3.23 3.23 3.22 3.1-1.79a1.75 1.75 0 0 0 0-2.89zM4.17.24 17.35 7.86l-2.9 2.9L3.18.38A1.7 1.7 0 0 1 4.17.24z"/></svg>
+          </a>
+        </div>
+      </li>
+
+      <!-- LinkedIn · iTunes id=288429040 -->
+      <li class="app-card">
+        <div class="app-icon-wrap">
+          <img class="app-icon" data-itunes="288429040" alt="LinkedIn icon" />
+          <div class="app-icon-fallback" aria-hidden="true">in</div>
+        </div>
+        <p class="app-card-name">LinkedIn</p>
+        <p class="app-card-ctx">Groups feature</p>
+        <div class="app-card-links">
+          <a class="store-btn ps" href="https://play.google.com/store/apps/details?id=com.linkedin.android" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn on Play Store" title="Play Store">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.18 23.76c.3.17.64.22.99.14l13.18-7.62-2.9-2.9-11.27 10.38zm-1.5-20.7A1.74 1.74 0 0 0 1.5 4v16c0 .38.1.72.18 1.02L14.1 8.1 1.68 3.06zm19.35 8.26-3.06-1.77-3.23 3.23 3.23 3.22 3.1-1.79a1.75 1.75 0 0 0 0-2.89zM4.17.24 17.35 7.86l-2.9 2.9L3.18.38A1.7 1.7 0 0 1 4.17.24z"/></svg>
+          </a>
+        </div>
+      </li>
+
+      <!-- Vuforia View · iTunes id=1076700285 -->
+      <li class="app-card">
+        <div class="app-icon-wrap">
+          <img class="app-icon" data-itunes="1076700285" alt="Vuforia View icon" />
+          <div class="app-icon-fallback" aria-hidden="true">VV</div>
+        </div>
+        <p class="app-card-name">Vuforia View</p>
+        <p class="app-card-ctx">Enterprise AR</p>
+        <div class="app-card-links">
+          <a class="store-btn ps" href="https://play.google.com/store/apps/details?id=com.ptc.vuforiaview" target="_blank" rel="noopener noreferrer" aria-label="Vuforia View on Play Store" title="Play Store">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.18 23.76c.3.17.64.22.99.14l13.18-7.62-2.9-2.9-11.27 10.38zm-1.5-20.7A1.74 1.74 0 0 0 1.5 4v16c0 .38.1.72.18 1.02L14.1 8.1 1.68 3.06zm19.35 8.26-3.06-1.77-3.23 3.23 3.23 3.22 3.1-1.79a1.75 1.75 0 0 0 0-2.89zM4.17.24 17.35 7.86l-2.9 2.9L3.18.38A1.7 1.7 0 0 1 4.17.24z"/></svg>
+          </a>
+          <a class="store-btn as" href="https://apps.apple.com/app/id1076700285" target="_blank" rel="noopener noreferrer" aria-label="Vuforia View on App Store" title="App Store">
+            <!-- Apple icon -->
+            <svg viewBox="0 0 814 1000" aria-hidden="true"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76.5 0-103.7 40.8-165.9 40.8s-105-37.5-165.9-117.1c-71.1-91.6-131.6-228.7-131.6-359.7 0-222.8 145.7-340.6 289.5-340.6 75.7 0 138.8 49.5 186.6 49.5 45.6 0 116.9-52.5 200.9-52.5 32.1 0 134.2 2.9 201.9 109.6zm-339.4-188.1c31.4-37.9 54.3-90.8 54.3-143.7 0-7.4-.6-14.9-1.9-21.1-51.2 1.9-112.2 34.2-149.7 76.5-28.5 32.7-55.4 85.2-55.4 138.7 0 8.3 1.3 16.6 1.9 19.4 3.2.6 8.4 1.3 13.6 1.3 46.2 0 104.3-30.8 137.2-70.8z"/></svg>
+          </a>
+        </div>
+      </li>
+
+      <!-- Transcend · iTunes id=1535029280 (BBT Transcend) -->
+      <li class="app-card">
+        <div class="app-icon-wrap">
+          <img class="app-icon" data-itunes="1535029280" alt="Transcend icon" />
+          <div class="app-icon-fallback" aria-hidden="true">TR</div>
+        </div>
+        <p class="app-card-name">Transcend</p>
+        <p class="app-card-ctx">Content app</p>
+        <div class="app-card-links">
+          <a class="store-btn ps" href="https://play.google.com/store/apps/details?id=com.bbt.transcend" target="_blank" rel="noopener noreferrer" aria-label="Transcend on Play Store" title="Play Store">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.18 23.76c.3.17.64.22.99.14l13.18-7.62-2.9-2.9-11.27 10.38zm-1.5-20.7A1.74 1.74 0 0 0 1.5 4v16c0 .38.1.72.18 1.02L14.1 8.1 1.68 3.06zm19.35 8.26-3.06-1.77-3.23 3.23 3.23 3.22 3.1-1.79a1.75 1.75 0 0 0 0-2.89zM4.17.24 17.35 7.86l-2.9 2.9L3.18.38A1.7 1.7 0 0 1 4.17.24z"/></svg>
+          </a>
+        </div>
+      </li>
+
+      <!-- Freshpick · no iTunes ID -->
+      <li class="app-card">
+        <div class="app-icon-wrap">
+          <div class="app-icon-fallback" aria-hidden="true">FP</div>
+        </div>
+        <p class="app-card-name">Freshpick</p>
+        <p class="app-card-ctx">E-commerce</p>
+        <div class="app-card-links">
+          <a class="store-btn ps" href="https://play.google.com/store/search?q=freshpick" target="_blank" rel="noopener noreferrer" aria-label="Freshpick on Play Store" title="Play Store">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.18 23.76c.3.17.64.22.99.14l13.18-7.62-2.9-2.9-11.27 10.38zm-1.5-20.7A1.74 1.74 0 0 0 1.5 4v16c0 .38.1.72.18 1.02L14.1 8.1 1.68 3.06zm19.35 8.26-3.06-1.77-3.23 3.23 3.23 3.22 3.1-1.79a1.75 1.75 0 0 0 0-2.89zM4.17.24 17.35 7.86l-2.9 2.9L3.18.38A1.7 1.7 0 0 1 4.17.24z"/></svg>
+          </a>
+        </div>
+      </li>
+
+      <!-- KhulKe · discontinued -->
+      <li class="app-card app-card--dim">
+        <div class="app-icon-wrap">
+          <div class="app-icon-fallback" aria-hidden="true">KK</div>
+        </div>
+        <p class="app-card-name">KhulKe</p>
+        <p class="app-card-ctx">Live streaming</p>
+        <div class="app-card-links"><span class="store-na">Discontinued</span></div>
+      </li>
+
+      <!-- Masterpeace Prayer · unlisted -->
+      <li class="app-card app-card--dim">
+        <div class="app-icon-wrap">
+          <div class="app-icon-fallback" aria-hidden="true">MP</div>
+        </div>
+        <p class="app-card-name">Masterpeace Prayer</p>
+        <p class="app-card-ctx">Hybrid app</p>
+        <div class="app-card-links"><span class="store-na">Unlisted</span></div>
+      </li>
+
+      <!-- TransitAddress · unlisted -->
+      <li class="app-card app-card--dim">
+        <div class="app-icon-wrap">
+          <div class="app-icon-fallback" aria-hidden="true">TA</div>
+        </div>
+        <p class="app-card-name">TransitAddress</p>
+        <p class="app-card-ctx">Android app</p>
+        <div class="app-card-links"><span class="store-na">Unlisted</span></div>
+      </li>
+
+    </ul>
+  </div>
 </section>
 
 
+<!-- ══════════════════════════════════════
+     EXPERIENCE
+     ══════════════════════════════════════ -->
+<section id="experience" aria-labelledby="exp-heading">
+  <div class="wrap">
+    <p class="section-label" id="exp-heading">Experience</p>
 
+    <ol class="exp-list" aria-label="Work history">
 
+      <!-- 1. Whirlpool -->
+      <li class="exp-item">
+        <div class="exp-header">
+          <span class="exp-role">Senior Android Developer</span>
+          <span class="exp-date">Aug 2023 &ndash; Dec 2025</span>
+        </div>
+        <p class="exp-company">Teamware Solutions &middot; Client: Whirlpool India Pvt. Ltd., Pune</p>
+        <ul class="exp-bullets">
+          <li>Diagnosed and resolved a critical heap memory leak in the Smart Cooktop module, reducing memory usage from 3&ndash;5 GB down to ~350 MB &mdash; eliminating OOM crashes in production.</li>
+          <li>Implemented Pet-Friendly Washing and Smart Cooktop features across Whirlpool, Maytag, and KitchenAid apps, covering BLE device pairing, WiFi provisioning, and cloud sync.</li>
+          <li>Contributed to the next-gen white-label platform; Cooktop module verified and functional across all brands.</li>
+          <li>Part of the GitHub Copilot pilot programme &mdash; team evaluation results drove org-wide adoption.</li>
+          <li>Active in sprint planning, backlog refinement, and work distribution. Led cross-team bug triage coordinating with iOS, backend, and QA. Implemented multilingual support across all brand flavours.</li>
+        </ul>
+        <p class="exp-app">Apps: Whirlpool Android &middot; KitchenAid &middot; Maytag &mdash; Google Play Store</p>
+      </li>
 
+      <!-- 2. KhulKe -->
+      <li class="exp-item">
+        <div class="exp-header">
+          <span class="exp-role">Senior Android Developer</span>
+          <span class="exp-date">Jan 2023 &ndash; Aug 2023</span>
+        </div>
+        <p class="exp-company">Loktantra Mediatech Pvt. Ltd., Bengaluru</p>
+        <ul class="exp-bullets">
+          <li>Led Android development for KhulKe &mdash; a podcast-style social platform with real-time audio/video streaming.</li>
+          <li>Owned the live video stream screen end-to-end: UI architecture, feature development, and performance debugging under live-streaming conditions.</li>
+          <li>Drove sprint planning, work distribution, and cross-team coordination with UI, QA, and iOS.</li>
+        </ul>
+        <p class="exp-app">App: KhulKe &mdash; Discontinued</p>
+      </li>
 
+      <!-- 3. PTC -->
+      <li class="exp-item">
+        <div class="exp-header">
+          <span class="exp-role">Senior Software Specialist</span>
+          <span class="exp-date">Apr 2021 &ndash; Dec 2022</span>
+        </div>
+        <p class="exp-company">PTC Software (India) Pvt. Ltd., Pune</p>
+        <ul class="exp-bullets">
+          <li>Shipped features for Vuforia View &mdash; an enterprise AR app enabling real-time 3D visualisation of industrial assets and repair procedures for global field teams.</li>
+          <li>Built performance-critical native modules using ARCore and Android NDK (C++), enabling smooth real-time 3D rendering on mobile hardware.</li>
+          <li>Maintained high code quality and documentation standards across production release cycles.</li>
+        </ul>
+        <p class="exp-app">App: <a href="https://play.google.com/store/apps/details?id=com.ptc.vuforiaview" target="_blank" rel="noopener noreferrer">Vuforia View</a> &mdash; Google Play Store</p>
+      </li>
 
+      <!-- 4. LinkedIn -->
+      <li class="exp-item">
+        <div class="exp-header">
+          <span class="exp-role">Software Developer</span>
+          <span class="exp-date">Mar 2018 &ndash; Apr 2021</span>
+        </div>
+        <p class="exp-company">Raja Software Labs &middot; Client: LinkedIn, Pune</p>
+        <ul class="exp-bullets">
+          <li>Built the LinkedIn Android Groups feature from scratch, end-to-end &mdash; achieving 100% test coverage on all authored code (unit, UI/layout, and Espresso end-to-end tests).</li>
+          <li>Designed and developed an internal shared UI component library, standardising patterns across screens.</li>
+          <li>Led a team of up to 4 Android developers; ran code reviews, training sessions, and ensured zero regressions.</li>
+          <li>End-to-end hiring: screened, interviewed, and onboarded 10+ Android developers; mentored juniors on TDD, MVVM, and clean code practices.</li>
+          <li>Implemented multilingual and accessibility support across assigned feature areas.</li>
+        </ul>
+        <p class="exp-app">App: <a href="https://play.google.com/store/apps/details?id=com.linkedin.android" target="_blank" rel="noopener noreferrer">LinkedIn Android</a> &mdash; Google Play Store</p>
+      </li>
 
+    </ol>
 
+    <!-- Older roles — collapsed -->
+    <button class="exp-toggle-btn" id="older-toggle" aria-expanded="false" aria-controls="older-roles">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+      <span id="older-label">Show earlier roles (2014&ndash;2018)</span>
+    </button>
 
-<!-- ABOUT -->
+    <div class="exp-collapsible" id="older-roles">
+      <ol class="exp-list" style="margin-top:28px" aria-label="Earlier roles">
 
+        <!-- Aptara -->
+        <li class="exp-item">
+          <div class="exp-header">
+            <span class="exp-role">Android Developer</span>
+            <span class="exp-date">Oct 2017 &ndash; Mar 2018</span>
+          </div>
+          <p class="exp-company">Avsar HR Services &middot; Client: Aptara New Media Pvt. Ltd., Pune</p>
+          <ul class="exp-bullets">
+            <li>Managed Play Store and App Store release pipeline for Cordova-based hybrid applications.</li>
+            <li>Resolved critical bugs in payment gateway integration, in-app PDF viewer, and app expansion file handling.</li>
+          </ul>
+          <p class="exp-app">Apps: Transcend &middot; Masterpeace Prayer &mdash; Google Play Store, App Store</p>
+        </li>
 
-<section
-id="about"
-class="max-w-6xl mx-auto px-6 py-20">
+        <!-- YujIT -->
+        <li class="exp-item">
+          <div class="exp-header">
+            <span class="exp-role">Senior Software Engineer</span>
+            <span class="exp-date">Sep 2016 &ndash; Oct 2017</span>
+          </div>
+          <p class="exp-company">YujIT Solutions LLP, Pune</p>
+          <ul class="exp-bullets">
+            <li>Led end-to-end Android development for multiple e-commerce applications across the full SDLC.</li>
+            <li>Managed and mentored 2 junior Android developers; reviewed deliverables and ensured on-time output.</li>
+            <li>Drove cross-functional collaboration across UI/UX, backend, QA, iOS, and Sales teams.</li>
+          </ul>
+          <p class="exp-app">Apps: Freshpick &middot; TransitAddress &mdash; Google Play Store</p>
+        </li>
 
+        <!-- Vspace -->
+        <li class="exp-item">
+          <div class="exp-header">
+            <span class="exp-role">Android Developer</span>
+            <span class="exp-date">Oct 2014 &ndash; Aug 2016</span>
+          </div>
+          <p class="exp-company">Vspace Software, Pune</p>
+          <ul class="exp-bullets">
+            <li>Developed multiple e-commerce and fleet management Android applications end-to-end using Java.</li>
+            <li>Handled client requirements, mentored new joiners, and delivered iterative feature enhancements.</li>
+          </ul>
+        </li>
 
-<h2 class="text-4xl font-bold mb-8">
-
-About Me
-
-</h2>
-
-
-
-<p
-class="max-w-4xl text-zinc-400 leading-relaxed">
-
-
-Senior Android Developer with experience delivering
-high-scale applications for LinkedIn,
-Whirlpool, KitchenAid, Maytag and PTC Vuforia.
-
-Strong focus on scalable architecture,
-performance optimisation, automated testing,
-and engineering leadership.
-
-
-</p>
-
-
+      </ol>
+    </div>
+  </div>
 </section>
 
 
-
-
-
-
-
-
-
-
-<!-- EXPERIENCE -->
-
-
-<section
-id="experience"
-class="max-w-6xl mx-auto px-6 py-20">
-
-
-<h2 class="text-4xl font-bold mb-12">
-
-Work Experience
-
-</h2>
-
-
-
-
-<div class="timeline-line pl-8 space-y-12">
-
-
-
-
-
-<!-- Whirlpool -->
-
-
-<article>
-
-
-<img
-src="https://play-lh.googleusercontent.com/ll0rlpoyb4V0udTvcTObPUB9GCkJppCi6gdpO0d1eeCNhnSXJsLAuKAFGWGAWc9MaJ7xcOISR-HVRx_A9rA3nwQ=w480-h960-rw"
-class="w-12 h-12 rounded mb-4">
-
-
-<h3 class="text-xl font-bold">
-
-Senior Android Developer
-
-</h3>
-
-
-<p class="text-purple-400">
-
-Teamware Solutions — Client: Whirlpool India
-
-</p>
-
-
-<p class="text-zinc-500">
-
-Aug 2023 - Dec 2025
-
-</p>
-
-
-
-<ul class="mt-4 text-zinc-400 list-disc ml-5 space-y-2">
-
-<li>
-Optimised Smart Cooktop memory usage from 3-5GB to ~350MB.
-</li>
-
-<li>
-Built BLE, WiFi provisioning and cloud sync features.
-</li>
-
-<li>
-Worked across Whirlpool, KitchenAid and Maytag apps.
-</li>
-
-
-</ul>
-
-
-</article>
-
-
-
-
-
-
-
-<!-- Loktantra -->
-
-
-<article>
-
-
-<img
-src="assets/company-icons/loktantra.png"
-class="w-12 h-12 rounded mb-4">
-
-
-<h3 class="text-xl font-bold">
-
-Senior Android Developer
-
-</h3>
-
-
-<p class="text-purple-400">
-
-Loktantra Mediatech Pvt Ltd
-
-</p>
-
-
-<p class="text-zinc-500">
-
-Jan 2023 - Aug 2023
-
-</p>
-
-
-<ul class="mt-4 text-zinc-400 list-disc ml-5 space-y-2">
-
-<li>
-Led Android development for KhulKe social platform.
-</li>
-
-<li>
-Built live video/audio streaming experiences.
-</li>
-
-</ul>
-
-
-</article>
-
-
-
-
-
-<!-- PTC -->
-
-
-<article>
-
-
-<img
-src="assets/company-icons/ptc.png"
-class="w-12 h-12 rounded mb-4">
-
-
-<h3 class="text-xl font-bold">
-
-Senior Software Specialist
-
-</h3>
-
-
-<p class="text-purple-400">
-
-PTC Software India Pvt Ltd
-
-</p>
-
-
-<p class="text-zinc-500">
-
-Apr 2021 - Dec 2022
-
-</p>
-
-
-<ul class="mt-4 text-zinc-400 list-disc ml-5">
-
-<li>
-Developed Vuforia View AR application.
-</li>
-
-<li>
-Worked with ARCore and Android NDK.
-</li>
-
-</ul>
-
-
-</article>
-
-    <!-- LINKEDIN EXPERIENCE -->
-
-
-<article>
-
-
-<img
-src="assets/company-icons/linkedin.png"
-class="w-12 h-12 rounded mb-4">
-
-
-<h3 class="text-xl font-bold">
-
-Software Developer
-
-</h3>
-
-
-<p class="text-purple-400">
-
-Raja Software Labs — Client: LinkedIn
-
-</p>
-
-
-<p class="text-zinc-500">
-
-Mar 2018 - Apr 2021
-
-</p>
-
-
-<ul class="mt-4 text-zinc-400 list-disc ml-5 space-y-2">
-
-<li>
-Built LinkedIn Android Groups feature from scratch.
-</li>
-
-<li>
-Achieved 100% test coverage using Espresso, Mockito and UI tests.
-</li>
-
-<li>
-Led a team of Android developers through mentoring and code reviews.
-</li>
-
-</ul>
-
-
-</article>
-
-
-
-
-
-<!-- AVSAR -->
-
-
-<article>
-
-
-<img
-src="assets/company-icons/avsar.png"
-class="w-12 h-12 rounded mb-4">
-
-
-<h3 class="text-xl font-bold">
-
-Android Developer
-
-</h3>
-
-
-<p class="text-purple-400">
-
-Avsar HR Services — Client: Aptara
-
-</p>
-
-
-<p class="text-zinc-500">
-
-Oct 2017 - Mar 2018
-
-</p>
-
-
-<ul class="mt-4 text-zinc-400 list-disc ml-5">
-
-<li>
-Managed mobile release pipeline for hybrid applications.
-</li>
-
-<li>
-Resolved payment gateway and PDF viewer issues.
-</li>
-
-</ul>
-
-
-</article>
-
-
-
-
-
-
-<!-- YUJIT -->
-
-
-<article>
-
-
-<img
-src="assets/company-icons/yujit.png"
-class="w-12 h-12 rounded mb-4">
-
-
-<h3 class="text-xl font-bold">
-
-Senior Software Engineer
-
-</h3>
-
-
-<p class="text-purple-400">
-
-YujIT Solutions LLP
-
-</p>
-
-
-<p class="text-zinc-500">
-
-Sep 2016 - Oct 2017
-
-</p>
-
-
-<ul class="mt-4 text-zinc-400 list-disc ml-5">
-
-<li>
-Developed multiple e-commerce applications.
-</li>
-
-<li>
-Mentored junior developers and managed delivery.
-</li>
-
-</ul>
-
-
-</article>
-
-
-
-
-
-
-<!-- VSPACE -->
-
-
-<article>
-
-
-<img
-src="assets/company-icons/vspace.png"
-class="w-12 h-12 rounded mb-4">
-
-
-<h3 class="text-xl font-bold">
-
-Android Developer
-
-</h3>
-
-
-<p class="text-purple-400">
-
-Vspace Software
-
-</p>
-
-
-<p class="text-zinc-500">
-
-Oct 2014 - Aug 2016
-
-</p>
-
-
-<ul class="mt-4 text-zinc-400 list-disc ml-5">
-
-<li>
-Built Android applications using Java.
-</li>
-
-<li>
-Worked on e-commerce and fleet management solutions.
-</li>
-
-</ul>
-
-
-</article>
-
-
-
-</div>
-
+<!-- ══════════════════════════════════════
+     SKILLS
+     ══════════════════════════════════════ -->
+<section id="skills" aria-labelledby="skills-heading">
+  <div class="wrap">
+    <p class="section-label" id="skills-heading">Skills</p>
+
+    <div class="skill-group">
+      <p class="skill-group-label">Languages</p>
+      <div class="chip-row">
+        <span class="chip">Kotlin</span>
+        <span class="chip">Java</span>
+        <span class="chip">C++</span>
+        <span class="chip">XML</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <p class="skill-group-label">Android Core</p>
+      <div class="chip-row">
+        <span class="chip">Jetpack Compose</span>
+        <span class="chip">XML layouts</span>
+        <span class="chip">MVVM</span>
+        <span class="chip">Clean Architecture</span>
+        <span class="chip">Coroutines</span>
+        <span class="chip">Flows</span>
+        <span class="chip">RxAndroid</span>
+        <span class="chip">Room</span>
+        <span class="chip">LiveData</span>
+        <span class="chip">ViewModel</span>
+        <span class="chip">Hilt</span>
+        <span class="chip">Dagger</span>
+        <span class="chip">REST APIs</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <p class="skill-group-label">Specialised</p>
+      <div class="chip-row">
+        <span class="chip">BLE / IoT</span>
+        <span class="chip">ARCore</span>
+        <span class="chip">Android NDK</span>
+        <span class="chip">Kotlin Multiplatform</span>
+        <span class="chip">WiFi Provisioning</span>
+        <span class="chip">SQL</span>
+        <span class="chip">JSON</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <p class="skill-group-label">Testing &amp; Quality</p>
+      <div class="chip-row">
+        <span class="chip">JUnit</span>
+        <span class="chip">Espresso</span>
+        <span class="chip">Mockito</span>
+        <span class="chip">TDD</span>
+        <span class="chip">Postman</span>
+        <span class="chip">SonarQube</span>
+        <span class="chip">Android Lint</span>
+        <span class="chip">Accessibility Scanner</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <p class="skill-group-label">Tools &amp; DevOps</p>
+      <div class="chip-row">
+        <span class="chip">Android Studio</span>
+        <span class="chip">Git</span>
+        <span class="chip">JIRA</span>
+        <span class="chip">Confluence</span>
+        <span class="chip">Firebase Crashlytics</span>
+        <span class="chip">Firebase Analytics</span>
+        <span class="chip">Jenkins</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <p class="skill-group-label">Release &amp; AI</p>
+      <div class="chip-row">
+        <span class="chip">Play Store Publishing</span>
+        <span class="chip">Multi-flavor Builds</span>
+        <span class="chip">Multilingual Support</span>
+        <span class="chip">Accessibility</span>
+        <span class="chip">OAuth</span>
+        <span class="chip">Push Notifications</span>
+        <span class="chip">GitHub Copilot</span>
+        <span class="chip">Gemini</span>
+        <span class="chip">Claude</span>
+      </div>
+    </div>
+
+  </div>
 </section>
 
 
-
-
-
-
-
-<!-- SKILLS -->
-
-
-<section
-class="max-w-6xl mx-auto px-6 py-20">
-
-
-<h2 class="text-4xl font-bold mb-12">
-
-Technical Skills
-
-</h2>
-
-
-
-<div class="grid md:grid-cols-2 gap-6">
-
-
-
-<div class="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
-
-<h3 class="text-xl font-semibold text-purple-400">
-
-Languages
-
-</h3>
-
-<p class="mt-3 text-zinc-400">
-
-Kotlin, Java, C++, XML
-
-</p>
-
-</div>
-
-
-
-
-<div class="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
-
-<h3 class="text-xl font-semibold text-purple-400">
-
-Android Core
-
-</h3>
-
-<p class="mt-3 text-zinc-400">
-
-Jetpack Compose, MVVM, Clean Architecture,
-Coroutines, Flow, Room, LiveData,
-ViewModel, Hilt, Dagger, RxAndroid
-
-</p>
-
-</div>
-
-
-
-
-<div class="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
-
-<h3 class="text-xl font-semibold text-purple-400">
-
-Specialised
-
-</h3>
-
-<p class="mt-3 text-zinc-400">
-
-ARCore, Android NDK, BLE/IoT,
-Kotlin Multiplatform, SQL,
-REST APIs, JSON
-
-</p>
-
-</div>
-
-
-
-
-<div class="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
-
-<h3 class="text-xl font-semibold text-purple-400">
-
-Testing
-
-</h3>
-
-<p class="mt-3 text-zinc-400">
-
-JUnit, Espresso, Mockito,
-TDD, Android Lint,
-Accessibility Scanner
-
-</p>
-
-</div>
-
-
-
-
-<div class="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
-
-<h3 class="text-xl font-semibold text-purple-400">
-
-Tools & DevOps
-
-</h3>
-
-<p class="mt-3 text-zinc-400">
-
-Android Studio, Git, Jira,
-Confluence, Jenkins,
-Firebase Crashlytics,
-Firebase Analytics
-
-</p>
-
-</div>
-
-
-
-
-<div class="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
-
-<h3 class="text-xl font-semibold text-purple-400">
-
-Release & AI Tools
-
-</h3>
-
-<p class="mt-3 text-zinc-400">
-
-Play Store Publishing,
-Multi-flavor Builds,
-OAuth, Push Notifications,
-GitHub Copilot, Gemini, Claude
-
-</p>
-
-</div>
-
-
-
-</div>
-
-
+<!-- ══════════════════════════════════════
+     EDUCATION
+     ══════════════════════════════════════ -->
+<section id="education" aria-labelledby="edu-heading">
+  <div class="wrap">
+    <p class="section-label" id="edu-heading">Education</p>
+    <div>
+      <p class="edu-degree">Bachelor of Engineering &mdash; Information Technology</p>
+      <p class="edu-school">Dr. D. Y. Patil College of Engineering, Ambi &middot; Savitribai Phule Pune University</p>
+      <p class="edu-meta">2010 &ndash; 2014</p>
+    </div>
+  </div>
 </section>
 
 
-
-
-
-
-
-
-<!-- PROJECTS -->
-
-
-<section
-id="projects"
-class="max-w-6xl mx-auto px-6 py-20">
-
-
-<h2 class="text-4xl font-bold mb-12">
-
-Featured Projects
-
-</h2>
-
-
-
-<div class="grid md:grid-cols-3 gap-8">
-
-
-
-
-
-<!-- Project Component -->
-
-
-<script>
-const projects = [
-{
-name:"Whirlpool",
-icon:"🏠",
-desc:"Smart appliance Android application with BLE pairing, WiFi provisioning and cloud sync.",
-url:"https://play.google.com/store/apps/details?id=com.whirlpool.android.wpapp"
-},
-{
-name:"KitchenAid",
-icon:"🍳",
-desc:"Premium smart kitchen appliance control experience.",
-url:"https://play.google.com/store/apps/details?id=com.nar.android.kitchenaid.kaapp"
-},
-{
-name:"Maytag",
-icon:"🧺",
-desc:"Smart home appliance application ecosystem.",
-url:"https://play.google.com/store/apps/details?id=com.maytag.android.mtapp"
-},
-{
-name:"Vuforia View",
-icon:"🥽",
-desc:"Enterprise AR application using ARCore and Android NDK.",
-url:"https://play.google.com/store/apps/details?id=com.ptc.vuforiaview"
-},
-{
-name:"Transcend",
-icon:"📚",
-desc:"Hybrid learning application with Play Store deployment.",
-url:"https://play.google.com/store/apps/details?id=com.bbt.transcend"
-},
-{
-name:"Freshpick",
-icon:"🛒",
-desc:"E-commerce application developed end-to-end.",
-url:"https://play.google.com/store/apps/details?id=com.urbanpiper.freshpick"
-}
-];
-
-document.write(
-projects.map(p=>`
-
-<article class="card bg-zinc-900 rounded-2xl p-6 border border-zinc-800">
-
-<div class="text-5xl">
-${p.icon}
-</div>
-
-<h3 class="text-xl font-bold mt-5">
-${p.name}
-</h3>
-
-<p class="text-zinc-400 mt-3">
-${p.desc}
-</p>
-
-
-<a
-target="_blank"
-href="${p.url}"
-class="inline-block mt-5 text-emerald-400">
-
-▶ Google Play
-
-</a>
-
-</article>
-
-`).join("")
-);
-
-</script>
-
-
-</div>
-
+<!-- ══════════════════════════════════════
+     CONTACT
+     ══════════════════════════════════════ -->
+<section id="contact" aria-labelledby="contact-heading">
+  <div class="wrap">
+    <p class="section-label" id="contact-heading">Contact</p>
+    <ul class="contact-list" aria-label="Contact details">
+      <li class="contact-item">
+        <div class="contact-icon" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        </div>
+        <a href="mailto:omkar25marne@gmail.com">omkar25marne@gmail.com</a>
+      </li>
+      <li class="contact-item">
+        <div class="contact-icon" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <a href="tel:+919730898897">+91 97308 98897</a>
+      </li>
+      <li class="contact-item">
+        <div class="contact-icon" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </div>
+        <a href="https://linkedin.com/in/omkar-marne/" target="_blank" rel="noopener noreferrer">linkedin.com/in/omkar-marne</a>
+      </li>
+    </ul>
+  </div>
 </section>
-
-
-
-
-
-
-
-
-<!-- CONTACT -->
-
-
-<section
-id="contact"
-class="max-w-6xl mx-auto px-6 py-20 text-center">
-
-
-<h2 class="text-4xl font-bold">
-
-Let's Connect
-
-</h2>
-
-
-<p class="text-zinc-400 mt-5">
-
-Available for Senior Android opportunities.
-
-</p>
-
-
-
-<div class="flex justify-center gap-8 mt-8">
-
-
-
-<a href="mailto:omkar25marne@gmail.com"
-class="text-3xl hover:text-purple-400">
-
-✉️
-
-</a>
-
-
-
-
-<a href="https://linkedin.com/in/omkar-marne"
-class="text-3xl hover:text-purple-400">
-
-💼
-
-</a>
-
-
-
-
-
-<a href="https://github.com"
-class="hover:text-purple-400">
-
-
-<svg
-width="36"
-height="36"
-fill="currentColor"
-viewBox="0 0 24 24">
-
-<path d="
-M12 2C6.48 2 2 6.48
-2 12c0 4.42 2.87 8.17
-6.84 9.5.5.09.66-.22.66-.48
-v-1.7c-2.78.6-3.37-1.34
--3.37-1.34-.45-1.15-1.11-1.46
--1.11-1.46-.91-.62.07-.61.07-.61
-1 .07 1.53 1.03 1.53 1.03
-.89 1.52 2.34 1.08 2.91.83
-.09-.65.35-1.08.63-1.33
--2.22-.25-4.56-1.11-4.56-4.95
-0-1.09.39-1.98 1.03-2.68
--.1-.25-.45-1.27.1-2.65
-0 0 .84-.27 2.75 1.02
-.8-.22 1.65-.33 2.5-.33
-.85 0 1.7.11 2.5.33
-1.91-1.29 2.75-1.02 2.75-1.02
-.55 1.38.2 2.4.1 2.65
-.64.7 1.03 1.59 1.03 2.68
-0 3.85-2.34 4.7-4.57 4.95
-.36.31.67.92.67 1.85v2.74
-c0 .27.16.58.67.48
-A10.01 10.01 0 0022 12
-c0-5.52-4.48-10-10-10z"/>
-
-</svg>
-
-
-</a>
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-
 
 </main>
 
-
-
-
-
-
-<footer
-class="border-t border-zinc-800 py-8 text-center text-zinc-500">
-
-
-© 2026 Omkar Marne
-
-
-<br>
-
-
-<a href="#home"
-class="text-purple-400">
-
-↑ Back to Top
-
-</a>
-
-
+<footer>
+  <div class="wrap">
+    <span>&copy; <span id="year"></span> Omkar Marne</span>
+    &nbsp;&middot;&nbsp;
+    <a href="#hero">Back to top &uarr;</a>
+  </div>
 </footer>
 
-
-
-
-
-
-
-
 <script>
+  /* ── Year ── */
+  document.getElementById('year').textContent = new Date().getFullYear();
 
+  /* ── Hamburger ── */
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobile-nav');
+  hamburger.addEventListener('click', () => {
+    const open = mobileNav.classList.toggle('open');
+    hamburger.classList.toggle('open', open);
+    hamburger.setAttribute('aria-expanded', open);
+  });
+  mobileNav.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      mobileNav.classList.remove('open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    });
+  });
 
-// Mobile menu
+  /* ── Older roles toggle ── */
+  const olderToggle = document.getElementById('older-toggle');
+  const olderRoles  = document.getElementById('older-roles');
+  const olderLabel  = document.getElementById('older-label');
+  olderToggle.addEventListener('click', () => {
+    const open = olderRoles.classList.toggle('open');
+    olderToggle.setAttribute('aria-expanded', open);
+    olderLabel.textContent = open
+      ? 'Hide earlier roles'
+      : 'Show earlier roles (2014\u20132018)';
+  });
 
-const menuBtn =
-document.getElementById("menuBtn");
+  /* ── App icons via iTunes Lookup API ──────────────────────────────
+     Collects all data-itunes IDs, calls the public iTunes lookup
+     endpoint (CORS-enabled, no API key), and sets the src on each
+     <img> once the artwork URL is returned.
+     Falls back silently to the monogram if the fetch fails or the
+     app isn't found.
+  ─────────────────────────────────────────────────────────────────── */
+  (function loadAppIcons() {
+    const imgs = Array.from(document.querySelectorAll('#app-grid .app-icon[data-itunes]'));
+    const idMap = {};
 
-const mobileMenu =
-document.getElementById("mobileMenu");
+    imgs.forEach(img => {
+      const id = img.dataset.itunes;
+      if (id && id !== '0') idMap[id] = img;
+    });
 
+    const ids = Object.keys(idMap).join(',');
+    if (!ids) return;
 
-menuBtn.onclick = () => {
-
-mobileMenu.classList.toggle("hidden");
-
-};
-
-
-
-
-
-// Counter animation
-
-
-const counters =
-document.querySelectorAll(".counter");
-
-
-const observer =
-new IntersectionObserver(entries=>{
-
-entries.forEach(entry=>{
-
-if(entry.isIntersecting){
-
-const counter =
-entry.target;
-
-const target =
-Number(counter.dataset.target);
-
-
-let count=0;
-
-
-const interval =
-setInterval(()=>{
-
-
-count++;
-
-
-counter.innerText =
-count + (target>=100 ? "+" : "+");
-
-
-if(count>=target)
-clearInterval(interval);
-
-
-},20);
-
-
-observer.unobserve(counter);
-
-
-}
-
-});
-
-
-});
-
-
-
-counters.forEach(c=>
-observer.observe(c)
-);
-
-
-
+    fetch('https://itunes.apple.com/lookup?id=' + ids + '&entity=software&country=us')
+      .then(r => r.json())
+      .then(data => {
+        (data.results || []).forEach(item => {
+          if (item.wrapperType !== 'software') return;
+          const img = idMap[String(item.trackId)];
+          if (!img || !item.artworkUrl100) return;
+          /* Request a larger icon (512 px) by rewriting the size token */
+          img.src = item.artworkUrl100.replace('100x100bb', '512x512bb');
+          img.onload  = () => img.classList.add('loaded');
+          img.onerror = () => { /* leave monogram fallback visible */ };
+        });
+      })
+      .catch(() => { /* network error — fallbacks stay visible */ });
+  })();
 </script>
-
-
-
 </body>
-
 </html>
