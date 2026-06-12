@@ -1,739 +1,384 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Omkar Marne — Senior Android Developer. 11 years building apps used by millions. Kotlin, Jetpack Compose, BLE/IoT, ARCore." />
-  <title>Omkar Marne — Senior Android Developer</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
-
-  <style>
-    /* ── Reset ── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; font-size: 16px; }
-
-    /* ── Tokens ── */
-    :root {
-      --bg:        #F8F8F6;
-      --ink:       #111110;
-      --ink-2:     #3A3A38;
-      --ink-3:     #6B6B6B;
-      --border:    #E2E2DF;
-      --accent:    #3B5BDB;
-      --break-bg:  #F0F3FF;
-      --chip-bg:   #EFEFED;
-      --chip-ink:  #3A3A38;
-      --max:       720px;
-    }
-
-    /* ── Base ── */
-    body {
-      background: var(--bg);
-      color: var(--ink);
-      font-family: 'DM Sans', system-ui, sans-serif;
-      font-size: 1rem;
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
-
-    /* ── Layout ── */
-    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
-
-    /* ── Nav ── */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(248,248,246,0.92);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-inner {
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 0 24px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .nav-name {
-      font-weight: 600;
-      font-size: 0.95rem;
-      color: var(--ink);
-      letter-spacing: -0.01em;
-    }
-    .nav-links {
-      display: flex;
-      gap: 28px;
-      list-style: none;
-    }
-    .nav-links a {
-      font-size: 0.875rem;
-      color: var(--ink-3);
-      text-decoration: none;
-      font-weight: 400;
-      transition: color 0.15s;
-    }
-    .nav-links a:hover { color: var(--ink); }
-
-    /* Mobile hamburger */
-    .nav-hamburger {
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      gap: 5px;
-      width: 32px;
-      height: 32px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 4px;
-    }
-    .nav-hamburger span {
-      display: block;
-      height: 1.5px;
-      background: var(--ink);
-      border-radius: 2px;
-      transition: all 0.25s ease;
-      transform-origin: center;
-    }
-    .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
-    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-
-    .nav-mobile {
-      display: none;
-      background: var(--bg);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-mobile.open { display: block; }
-    .nav-mobile ul {
-      list-style: none;
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 12px 24px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-    .nav-mobile a {
-      display: block;
-      padding: 8px 0;
-      font-size: 0.95rem;
-      color: var(--ink-2);
-      text-decoration: none;
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-mobile li:last-child a { border-bottom: none; }
-
-    /* ── Sections ── */
-    section { padding: 72px 0; }
-    section + section { border-top: 1px solid var(--border); }
-
-    .section-label {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--ink-3);
-      margin-bottom: 32px;
-    }
-
-    /* ── Hero ── */
-    #hero { padding: 88px 0 72px; }
-    .hero-name {
-      font-size: clamp(2.2rem, 6vw, 3.2rem);
-      font-weight: 600;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-      color: var(--ink);
-      margin-bottom: 16px;
-    }
-    .hero-title {
-      font-size: 1.1rem;
-      font-weight: 400;
-      color: var(--ink-3);
-      margin-bottom: 24px;
-    }
-    .hero-summary {
-      font-size: 1.05rem;
-      color: var(--ink-2);
-      line-height: 1.75;
-      max-width: 600px;
-      margin-bottom: 32px;
-    }
-    .hero-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      font-size: 0.875rem;
-      color: var(--ink-3);
-    }
-    .hero-meta-item {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .hero-meta-item svg { flex-shrink: 0; }
-
-    /* ── Career break callout ── */
-    .break-callout {
-      margin-top: 36px;
-      border-left: 3px solid var(--accent);
-      background: var(--break-bg);
-      border-radius: 0 8px 8px 0;
-      padding: 16px 20px;
-    }
-    .break-callout-label {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 6px;
-    }
-    .break-callout p {
-      font-size: 0.9rem;
-      color: var(--ink-2);
-      line-height: 1.6;
-    }
-    .break-callout strong { color: var(--ink); font-weight: 500; }
-
-    /* ── Experience timeline ── */
-    .exp-list { list-style: none; }
-    .exp-item { position: relative; padding-left: 20px; padding-bottom: 44px; }
-    .exp-item:last-child { padding-bottom: 0; }
-    .exp-item::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 8px;
-      bottom: -8px;
-      width: 1px;
-      background: var(--border);
-    }
-    .exp-item:last-child::before { display: none; }
-    .exp-item::after {
-      content: '';
-      position: absolute;
-      left: -3px;
-      top: 7px;
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--ink-3);
-      border: 2px solid var(--bg);
-      box-shadow: 0 0 0 1px var(--border);
-    }
-
-    .exp-header {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 4px 16px;
-      margin-bottom: 4px;
-    }
-    .exp-role { font-weight: 600; font-size: 0.98rem; color: var(--ink); }
-    .exp-date {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.75rem;
-      color: var(--ink-3);
-      white-space: nowrap;
-    }
-    .exp-company { font-size: 0.875rem; color: var(--ink-3); margin-bottom: 12px; }
-    .exp-bullets { list-style: none; }
-    .exp-bullets li {
-      font-size: 0.9rem;
-      color: var(--ink-2);
-      line-height: 1.65;
-      padding-left: 14px;
-      position: relative;
-      margin-bottom: 6px;
-    }
-    .exp-bullets li::before {
-      content: '–';
-      position: absolute;
-      left: 0;
-      color: var(--ink-3);
-    }
-    .exp-app {
-      margin-top: 10px;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.75rem;
-      color: var(--ink-3);
-    }
-    .exp-app a { color: var(--ink-3); }
-    .exp-app a:hover { color: var(--accent); }
-
-    /* Collapsible older roles */
-    .exp-toggle-btn {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.875rem;
-      color: var(--ink-3);
-      margin-top: -8px;
-    }
-    .exp-toggle-btn:hover { color: var(--ink); }
-    .exp-toggle-btn svg { transition: transform 0.25s ease; }
-    .exp-toggle-btn[aria-expanded="true"] svg { transform: rotate(180deg); }
-    .exp-collapsible { overflow: hidden; max-height: 0; transition: max-height 0.4s ease; }
-    .exp-collapsible.open { max-height: 1200px; }
-
-    /* ── Skills ── */
-    .skill-group { margin-bottom: 24px; }
-    .skill-group-label {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-3);
-      margin-bottom: 10px;
-    }
-    .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
-    .chip {
-      background: var(--chip-bg);
-      color: var(--chip-ink);
-      font-size: 0.82rem;
-      padding: 5px 12px;
-      border-radius: 100px;
-      font-family: 'DM Mono', monospace;
-    }
-
-    /* ── Education ── */
-    .edu-item { }
-    .edu-degree { font-weight: 600; font-size: 0.98rem; color: var(--ink); }
-    .edu-school { font-size: 0.9rem; color: var(--ink-2); margin-top: 3px; }
-    .edu-meta { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--ink-3); margin-top: 4px; }
-
-    /* ── Contact ── */
-    .contact-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-    .contact-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 0.95rem;
-      color: var(--ink-2);
-    }
-    .contact-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      background: var(--chip-bg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      color: var(--ink-3);
-    }
-    .contact-item a { color: var(--ink-2); }
-    .contact-item a:hover { color: var(--accent); }
-
-    /* ── Footer ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 28px 0;
-      text-align: center;
-      font-size: 0.82rem;
-      color: var(--ink-3);
-    }
-    footer a { color: var(--ink-3); }
-    footer a:hover { color: var(--accent); }
-
-    /* ── Responsive ── */
-    @media (max-width: 640px) {
-      section { padding: 56px 0; }
-      #hero { padding: 64px 0 56px; }
-      .nav-links { display: none; }
-      .nav-hamburger { display: flex; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { transition: none !important; animation: none !important; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Omkar Marne | Senior Android Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: {
+                            400: '#34d399',
+                            500: '#10b981',
+                            600: '#059669',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for premium feel */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #09090b; }
+        ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
+    </style>
 </head>
-<body>
+<body class="bg-zinc-950 text-zinc-100 antialiased selection:bg-emerald-500 selection:text-zinc-950">
 
-<!-- ── Navigation ── -->
-<nav aria-label="Main navigation">
-  <div class="nav-inner">
-    <a href="#hero" class="nav-name">Omkar Marne</a>
-    <ul class="nav-links" role="list">
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#education">Education</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-nav">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</nav>
+    <header class="sticky top-0 z-50 w-full border-b border-zinc-800 bg-zinc-950/80 backdrop-blur-md">
+        <div class="mx-auto flex max-w-7xl h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
+            <a href="#home" class="text-xl font-bold tracking-tight text-white hover:text-emerald-400 transition-colors">
+                OMKAR<span class="text-emerald-400">.</span>MARNE
+            </a>
 
-<div class="nav-mobile" id="mobile-nav" role="menu">
-  <ul>
-    <li><a href="#experience" role="menuitem">Experience</a></li>
-    <li><a href="#skills"     role="menuitem">Skills</a></li>
-    <li><a href="#education"  role="menuitem">Education</a></li>
-    <li><a href="#contact"    role="menuitem">Contact</a></li>
-  </ul>
-</div>
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-zinc-400">
+                <a href="#home" class="hover:text-white transition-colors">Home</a>
+                <a href="#about" class="hover:text-white transition-colors">About</a>
+                <a href="#skills" class="hover:text-white transition-colors">Skills</a>
+                <a href="#projects" class="hover:text-white transition-colors">Projects</a>
+                <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+            </nav>
 
-<main>
-
-<!-- ── Hero ── -->
-<section id="hero" aria-label="Introduction">
-  <div class="wrap">
-    <h1 class="hero-name">Omkar Marne</h1>
-    <p class="hero-title">Senior Android Developer</p>
-    <p class="hero-summary">
-      11 years building Android apps used by hundreds of millions — LinkedIn, Whirlpool, PTC Vuforia. 
-      Specialised in Kotlin, Jetpack Compose, BLE/IoT, and ARCore. 
-      Track record of leading teams, diagnosing hard performance issues, and shipping on time.
-    </p>
-    <div class="hero-meta">
-      <span class="hero-meta-item">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        Pune, India
-      </span>
-      <span class="hero-meta-item">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-        <a href="mailto:omkar25marne@gmail.com">omkar25marne@gmail.com</a>
-      </span>
-      <span class="hero-meta-item">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-        <a href="https://linkedin.com/in/omkar-marne/" target="_blank" rel="noopener noreferrer">linkedin.com/in/omkar-marne</a>
-      </span>
-    </div>
-
-    <!-- Career break — the one highlighted element on the page -->
-    <div class="break-callout" role="note" aria-label="Career break note">
-      <p class="break-callout-label">Career break · Since January 2026</p>
-      <p>Taking time for knee surgery rehabilitation. Recovery is complete — <strong>available immediately</strong> for remote and on-site Senior Android roles.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ── Experience ── -->
-<section id="experience" aria-labelledby="exp-heading">
-  <div class="wrap">
-    <p class="section-label" id="exp-heading">Experience</p>
-
-    <ol class="exp-list" aria-label="Work history">
-
-      <!-- Whirlpool -->
-      <li class="exp-item">
-        <div class="exp-header">
-          <span class="exp-role">Senior Android Developer</span>
-          <span class="exp-date">Aug 2023 – Dec 2025</span>
+            <button id="menu-btn" type="button" class="inline-flex items-center justify-center rounded-md p-2 text-zinc-400 hover:bg-zinc-900 hover:text-white md:hidden focus:outline-none" aria-label="Toggle Menu">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>
+            </button>
         </div>
-        <p class="exp-company">Teamware Solutions · Client: Whirlpool India Pvt. Ltd., Pune</p>
-        <ul class="exp-bullets" aria-label="Responsibilities">
-          <li>Diagnosed and resolved a critical heap memory leak in the Smart Cooktop module, reducing memory usage from 3–5 GB down to ~350 MB — eliminating OOM crashes in production.</li>
-          <li>Implemented Pet-Friendly Washing and Smart Cooktop features across Whirlpool, Maytag, and KitchenAid apps, covering BLE device pairing, WiFi provisioning, and cloud sync.</li>
-          <li>Contributed to the next-gen white-label platform; Cooktop module verified and functional across all brands.</li>
-          <li>Part of the GitHub Copilot pilot programme — team evaluation results drove org-wide adoption.</li>
-          <li>Led cross-team bug triage across brands, coordinating with iOS, backend, and QA. Implemented multilingual support across all brand flavours.</li>
-        </ul>
-        <p class="exp-app">Apps: <a href="https://play.google.com/store/search?q=whirlpool" target="_blank" rel="noopener noreferrer">Whirlpool Android</a> · KitchenAid · Maytag — Google Play Store</p>
-      </li>
 
-      <!-- KhulKe -->
-      <li class="exp-item">
-        <div class="exp-header">
-          <span class="exp-role">Senior Android Developer</span>
-          <span class="exp-date">Jan 2023 – Aug 2023</span>
+        <div id="mobile-menu" class="hidden md:hidden border-b border-zinc-800 bg-zinc-950 px-4 pt-2 pb-4 space-y-2">
+            <a href="#home" class="block rounded-md px-3 py-2 text-base font-medium text-zinc-400 hover:bg-zinc-900 hover:text-white">Home</a>
+            <a href="#about" class="block rounded-md px-3 py-2 text-base font-medium text-zinc-400 hover:bg-zinc-900 hover:text-white">About</a>
+            <a href="#skills" class="block rounded-md px-3 py-2 text-base font-medium text-zinc-400 hover:bg-zinc-900 hover:text-white">Skills</a>
+            <a href="#projects" class="block rounded-md px-3 py-2 text-base font-medium text-zinc-400 hover:bg-zinc-900 hover:text-white">Projects</a>
+            <a href="#contact" class="block rounded-md px-3 py-2 text-base font-medium text-zinc-400 hover:bg-zinc-900 hover:text-white">Contact</a>
         </div>
-        <p class="exp-company">Loktantra Mediatech Pvt. Ltd., Bengaluru</p>
-        <ul class="exp-bullets">
-          <li>Led Android development for KhulKe — a podcast-style social platform with real-time audio/video streaming.</li>
-          <li>Owned the live video stream screen end-to-end: UI architecture, feature development, and performance debugging under live-streaming conditions.</li>
-          <li>Drove sprint planning, work distribution, and cross-team coordination with UI, QA, and iOS.</li>
-        </ul>
-        <p class="exp-app">App: KhulKe — Discontinued</p>
-      </li>
+    </header>
 
-      <!-- PTC -->
-      <li class="exp-item">
-        <div class="exp-header">
-          <span class="exp-role">Senior Software Specialist</span>
-          <span class="exp-date">Apr 2021 – Dec 2022</span>
+    <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        
+        <section id="home" class="flex min-h-[calc(100vh-4rem)] flex-col justify-center py-20 lg:flex-row lg:items-center lg:gap-12">
+            <div class="flex-1 space-y-6 text-center lg:text-left">
+                <div class="inline-flex items-center rounded-full px-3 py-1 text-xs font-medium bg-emerald-500/10 text-emerald-400 ring-1 ring-inset ring-emerald-500/20">
+                    Available for Opportunities
+                </div>
+                <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
+                    Building High-Scale <br class="hidden sm:inline">
+                    <span class="bg-gradient-to-r from-emerald-400 to-teal-500 bg-clip-text text-transparent">Mobile Systems</span>
+                </h1>
+                <p class="mx-auto lg:mx-0 max-w-2xl text-lg text-zinc-400">
+                    I'm Omkar Marne, a Senior Android Developer with 11 years of engineering experience crafting pristine architectures for globally recognized products.
+                </p>
+                <div class="flex flex-wrap justify-center lg:justify-start gap-4 pt-2">
+                    <a href="#projects" class="rounded-xl bg-emerald-500 px-6 py-3 text-sm font-semibold text-zinc-950 shadow-sm hover:bg-emerald-400 transition-colors">
+                        View My Work
+                    </a>
+                    <a href="#contact" class="rounded-xl bg-zinc-900 border border-zinc-800 px-6 py-3 text-sm font-semibold text-white hover:bg-zinc-800 transition-all">
+                        Let's Connect
+                    </a>
+                </div>
+            </div>
+            <div class="flex-1 mt-12 lg:mt-0 flex justify-center items-center">
+                <div class="relative w-72 h-72 sm:w-96 sm:h-96 rounded-full bg-gradient-to-tr from-emerald-500/20 to-zinc-900 flex items-center justify-center p-8 group">
+                    <div class="absolute inset-0 rounded-full bg-emerald-500/5 blur-xl group-hover:bg-emerald-500/10 transition-all"></div>
+                    <div class="w-full h-full rounded-full border border-zinc-800 bg-zinc-950 flex flex-col justify-center items-center text-center p-6 relative z-10">
+                        <span class="text-5xl mb-2">🤖</span>
+                        <div class="font-bold text-xl text-white">11+ Years Experience</div>
+                        <div class="text-xs text-zinc-500 mt-1">LinkedIn • Whirlpool • PTC View</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="py-24 border-t border-zinc-900 scroll-mt-16">
+            <div class="max-w-3xl">
+                <h2 class="text-xs font-semibold tracking-wider text-emerald-400 uppercase">About Me</h2>
+                <p class="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">Engineering for scale and visual performance.</p>
+                <p class="mt-6 text-lg leading-8 text-zinc-400">
+                    Throughout my decade-plus career journey, I have focused heavily on modern Android system optimization, hardware integrations, and test-driven development methodologies. From managing real-time data visualizers to driving codebase transitions for massive user ecosystems, my approach targets clean decoupling and defensive memory management.
+                </p>
+            </div>
+
+            <div class="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-4">
+                <div class="border border-zinc-900 bg-zinc-900/20 p-6 rounded-2xl text-center">
+                    <div class="text-3xl font-bold text-emerald-400">11+</div>
+                    <div class="text-xs text-zinc-500 uppercase mt-1 tracking-wider">Years Exp</div>
+                </div>
+                <div class="border border-zinc-900 bg-zinc-900/20 p-6 rounded-2xl text-center">
+                    <div class="text-3xl font-bold text-white">500M+</div>
+                    <div class="text-xs text-zinc-500 uppercase mt-1 tracking-wider">App Reach</div>
+                </div>
+                <div class="border border-zinc-900 bg-zinc-900/20 p-6 rounded-2xl text-center">
+                    <div class="text-3xl font-bold text-white">350MB</div>
+                    <div class="text-xs text-zinc-500 uppercase mt-1 tracking-wider">Heap Leak Fix</div>
+                </div>
+                <div class="border border-zinc-900 bg-zinc-900/20 p-6 rounded-2xl text-center">
+                    <div class="text-3xl font-bold text-white">100%</div>
+                    <div class="text-xs text-zinc-500 uppercase mt-1 tracking-wider">Test Coverage</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="py-24 border-t border-zinc-900 scroll-mt-16">
+            <div class="mb-12">
+                <h2 class="text-xs font-semibold tracking-wider text-emerald-400 uppercase">Expertise</h2>
+                <p class="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">Technical Competency Tree</p>
+            </div>
+
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <div class="border border-zinc-900 bg-zinc-900/30 p-6 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-base font-semibold text-white mb-4">Languages</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2.5 py-1 text-xs font-medium rounded-md bg-zinc-900 border border-zinc-800 text-zinc-300">Kotlin</span>
+                            <span class="px-2.5 py-1 text-xs font-medium rounded-md bg-zinc-900 border border-zinc-800 text-zinc-300">Java</span>
+                            <span class="px-2.5 py-1 text-xs font-medium rounded-md bg-zinc-900 border border-zinc-800 text-zinc-300">C++</span>
+                            <span class="px-2.5 py-1 text-xs font-medium rounded-md bg-zinc-900 border border-zinc-800 text-zinc-300">XML</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border border-zinc-900 bg-zinc-900/30 p-6 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-base font-semibold text-white mb-4">Android Core</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2.5 py-1 text-xs font-medium rounded-md bg-zinc-900 border border-zinc-800 text-zinc-300">Jetpack Compose</span>
+                            <span class="px-2.5 py-1 text-xs font-medium rounded-md bg-zinc-900 border border-zinc-800 text-zinc-300">MVVM / Clean Arch</span>
+                            <span class="px-2.5 py-1 text-xs font-medium rounded-md bg-zinc-900 border border-zinc-800 text-zinc-300">Coroutines & Flows</span>
+                            <span class="px-2.5 py-1 text-xs font-medium rounded-md bg-zinc-900 border border-zinc-800 text-zinc-300">Dagger / Hilt</span>
+                            <span class="px-2.5 py-1 text-xs font-medium rounded-md bg-zinc-900 border border-zinc-800 text-zinc-300">Room & LiveData</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border border-zinc-900 bg-zinc-900/30 p-6 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-base font-semibold text-white mb-4">Specialized Engineering</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2.5 py-1 text-xs font-medium rounded-md bg-zinc-900 border border-zinc-800 text-zinc-300">BLE / IoT Systems</span>
+                            <span class="px-2.5 py-1 text-xs font-medium rounded-md bg-zinc-900 border border-zinc-800 text-zinc-300">ARCore Graphics</span>
+                            <span class="px-2.5 py-1 text-xs font-medium rounded-md bg-zinc-900 border border-zinc-800 text-zinc-300">Android NDK</span>
+                            <span class="px-2.5 py-1 text-xs font-medium rounded-md bg-zinc-900 border border-zinc-800 text-zinc-300">Kotlin Multiplatform (KMP)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border border-zinc-900 bg-zinc-900/30 p-6 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-base font-semibold text-white mb-4">Testing & Quality</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2.5 py-1 text-xs font-medium rounded-md bg-zinc-900 border border-zinc-800 text-zinc-300">JUnit</span>
+                            <span class="px-2.5 py-1 text-xs font-medium rounded-md bg-zinc-900 border border-zinc-800 text-zinc-300">Espresso Matrix</span>
+                            <span class="px-2.5 py-1 text-xs font-medium rounded-md bg-zinc-900 border border-zinc-800 text-zinc-300">Mockito Framework</span>
+                            <span class="px-2.5 py-1 text-xs font-medium rounded-md bg-zinc-900 border border-zinc-800 text-zinc-300">TDD Methodologies</span>
+                            <span class="px-2.5 py-1 text-xs font-medium rounded-md bg-zinc-900 border border-zinc-800 text-zinc-300">SonarQube / Lint</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border border-zinc-900 bg-zinc-900/30 p-6 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-base font-semibold text-white mb-4">Tools & DevOps</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2.5 py-1 text-xs font-medium rounded-md bg-zinc-900 border border-zinc-800 text-zinc-300">Android Studio</span>
+                            <span class="px-2.5 py-1 text-xs font-medium rounded-md bg-zinc-900 border border-zinc-800 text-zinc-300">Git Pipelines</span>
+                            <span class="px-2.5 py-1 text-xs font-medium rounded-md bg-zinc-900 border border-zinc-800 text-zinc-300">Firebase Crashlytics</span>
+                            <span class="px-2.5 py-1 text-xs font-medium rounded-md bg-zinc-900 border border-zinc-800 text-zinc-300">Jenkins Automation</span>
+                            <span class="px-2.5 py-1 text-xs font-medium rounded-md bg-zinc-900 border border-zinc-800 text-zinc-300">Multi-Flavor Builds</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border border-zinc-900 bg-zinc-900/30 p-6 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-base font-semibold text-white mb-4">AI Copilot Acceleration</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2.5 py-1 text-xs font-medium rounded-md bg-zinc-900 border border-emerald-500/30 text-emerald-400">GitHub Copilot Pilot</span>
+                            <span class="px-2.5 py-1 text-xs font-medium rounded-md bg-zinc-900 border border-zinc-800 text-zinc-300">Gemini Optimization</span>
+                            <span class="px-2.5 py-1 text-xs font-medium rounded-md bg-zinc-900 border border-zinc-800 text-zinc-300">Claude Integration</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="py-24 border-t border-zinc-900 scroll-mt-16">
+            <div class="mb-12">
+                <h2 class="text-xs font-semibold tracking-wider text-emerald-400 uppercase">Case Studies</h2>
+                <p class="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">Featured Systems Experience</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="group border border-zinc-900 bg-zinc-900/20 rounded-2xl overflow-hidden hover:scale-[1.02] hover:border-emerald-500/40 hover:shadow-[0_0_20px_rgba(16,185,129,0.05)] transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="w-full h-48 bg-zinc-900 border-b border-zinc-800 flex items-center justify-center p-4">
+                            <span class="text-4xl">🍳</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">Whirlpool Smart Cooktop System</h3>
+                            <p class="mt-2 text-xs text-zinc-400 leading-relaxed">
+                                Refined white-label connectivity across Whirlpool, Maytag, and KitchenAid apps. Reconstructed BLE provisioning matrices and fixed critical leaks.
+                            </p>
+                            <div class="mt-4 flex flex-wrap gap-1.5">
+                                <span class="text-[10px] bg-zinc-900 px-2 py-0.5 rounded text-zinc-400 border border-zinc-800">BLE/IoT</span>
+                                <span class="text-[10px] bg-zinc-900 px-2 py-0.5 rounded text-zinc-400 border border-zinc-800">Memory Profiling</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0 flex gap-4">
+                        <a href="#" class="text-xs font-semibold text-emerald-400 hover:underline">Live Demo</a>
+                        <a href="#" class="text-xs font-semibold text-zinc-500 hover:text-zinc-300">GitHub</a>
+                    </div>
+                </div>
+
+                <div class="group border border-zinc-900 bg-zinc-900/20 rounded-2xl overflow-hidden hover:scale-[1.02] hover:border-emerald-500/40 hover:shadow-[0_0_20px_rgba(16,185,129,0.05)] transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="w-full h-48 bg-zinc-900 border-b border-zinc-800 flex items-center justify-center p-4">
+                            <span class="text-4xl">👥</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">LinkedIn Groups Infrastructure</h3>
+                            <p class="mt-2 text-xs text-zinc-400 leading-relaxed">
+                                Engineered the core architecture layer from scratch for millions of globally active users with comprehensive testing parameters.
+                            </p>
+                            <div class="mt-4 flex flex-wrap gap-1.5">
+                                <span class="text-[10px] bg-zinc-900 px-2 py-0.5 rounded text-zinc-400 border border-zinc-800">Espresso</span>
+                                <span class="text-[10px] bg-zinc-900 px-2 py-0.5 rounded text-zinc-400 border border-zinc-800">Shared Libraries</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0 flex gap-4">
+                        <a href="#" class="text-xs font-semibold text-emerald-400 hover:underline">Live Demo</a>
+                        <a href="#" class="text-xs font-semibold text-zinc-500 hover:text-zinc-300">GitHub</a>
+                    </div>
+                </div>
+
+                <div class="group border border-zinc-900 bg-zinc-900/20 rounded-2xl overflow-hidden hover:scale-[1.02] hover:border-emerald-500/40 hover:shadow-[0_0_20px_rgba(16,185,129,0.05)] transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="w-full h-48 bg-zinc-900 border-b border-zinc-800 flex items-center justify-center p-4">
+                            <span class="text-4xl">👓</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">Vuforia View Enterprise AR</h3>
+                            <p class="mt-2 text-xs text-zinc-400 leading-relaxed">
+                                Implemented performance-critical native architecture solutions mapping graphical telemetry schemas onto physical machinery frameworks.
+                            </p>
+                            <div class="mt-4 flex flex-wrap gap-1.5">
+                                <span class="text-[10px] bg-zinc-900 px-2 py-0.5 rounded text-zinc-400 border border-zinc-800">ARCore</span>
+                                <span class="text-[10px] bg-zinc-900 px-2 py-0.5 rounded text-zinc-400 border border-zinc-800">Android NDK C++</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0 flex gap-4">
+                        <a href="#" class="text-xs font-semibold text-emerald-400 hover:underline">Live Demo</a>
+                        <a href="#" class="text-xs font-semibold text-zinc-500 hover:text-zinc-300">GitHub</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="py-24 border-t border-zinc-900 scroll-mt-16">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div>
+                    <h2 class="text-xs font-semibold tracking-wider text-emerald-400 uppercase">Contact</h2>
+                    <p class="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">Get in touch</p>
+                    <p class="mt-4 text-zinc-400 max-w-sm">
+                        Available for immediate on-site roles in Pune, India, or global remote engagements. Let’s discuss architectures, state management, or optimizations.
+                    </p>
+                    
+                    <div class="mt-8 space-y-4 text-sm text-zinc-300">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-zinc-500">📍</span>
+                            <span>Pune, Maharashtra, India</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="text-zinc-500">✉</span>
+                            <a href="mailto:omkar25marne@gmail.com" class="hover:text-emerald-400 transition-colors underline decoration-zinc-700">omkar25marne@gmail.com</a>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="text-zinc-500">📞</span>
+                            <span>+91 97308 98897</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 flex space-x-4">
+                        <a href="https://www.linkedin.com/in/omkar-marne/" target="_blank" class="p-2 bg-zinc-900 border border-zinc-800 rounded-lg hover:border-emerald-400 transition-colors text-zinc-400 hover:text-white" aria-label="LinkedIn">
+                            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                        </a>
+                        <a href="#" class="p-2 bg-zinc-900 border border-zinc-800 rounded-lg hover:border-emerald-400 transition-colors text-zinc-400 hover:text-white" aria-label="GitHub">
+                            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="border border-zinc-900 bg-zinc-900/10 p-8 rounded-2xl">
+                    <form action="#" method="POST" class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-xs font-semibold uppercase tracking-wider text-zinc-400">Name</label>
+                            <input type="text" name="name" id="name" autocomplete="name" required class="mt-2 block w-full rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-100 placeholder-zinc-600 px-4 py-3 text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 transition-colors">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-xs font-semibold uppercase tracking-wider text-zinc-400">Email Address</label>
+                            <input type="email" name="email" id="email" autocomplete="email" required class="mt-2 block w-full rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-100 placeholder-zinc-600 px-4 py-3 text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 transition-colors">
+                        </div>
+                        <div>
+                            <label for="message" class="block text-xs font-semibold uppercase tracking-wider text-zinc-400">Message</label>
+                            <textarea name="message" id="message" rows="4" required class="mt-2 block w-full rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-100 placeholder-zinc-600 px-4 py-3 text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 transition-colors"></textarea>
+                        </div>
+                        <button type="submit" class="w-full rounded-xl bg-emerald-500 px-4 py-3 text-sm font-semibold text-zinc-950 shadow-sm hover:bg-emerald-400 transition-colors">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="border-t border-zinc-900 bg-zinc-950 text-xs text-zinc-500 py-8">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+                &copy; 2026 Omkar Marne. Built with Tailwind CSS on GitHub Pages.
+            </div>
+            <a href="#home" class="inline-flex items-center space-x-1 hover:text-emerald-400 transition-colors font-medium">
+                <span>Back to top</span>
+                <span>↑</span>
+            </a>
         </div>
-        <p class="exp-company">PTC Software (India) Pvt. Ltd., Pune</p>
-        <ul class="exp-bullets">
-          <li>Shipped features for Vuforia View — an enterprise AR app enabling real-time 3D visualisation of industrial assets and repair procedures for global field teams.</li>
-          <li>Built performance-critical native modules using ARCore and Android NDK (C++), enabling smooth real-time 3D rendering on mobile hardware.</li>
-          <li>Maintained high code quality and documentation standards across production release cycles.</li>
-        </ul>
-        <p class="exp-app">App: <a href="https://play.google.com/store/apps/details?id=com.ptc.vuforiaview" target="_blank" rel="noopener noreferrer">Vuforia View</a> — Google Play Store</p>
-      </li>
+    </footer>
 
-      <!-- LinkedIn -->
-      <li class="exp-item">
-        <div class="exp-header">
-          <span class="exp-role">Software Developer</span>
-          <span class="exp-date">Mar 2018 – Apr 2021</span>
-        </div>
-        <p class="exp-company">Raja Software Labs · Client: LinkedIn, Pune</p>
-        <ul class="exp-bullets">
-          <li>Built the LinkedIn Android Groups feature from scratch, end-to-end — achieving 100% test coverage on all authored code (unit, UI/layout, and Espresso end-to-end tests).</li>
-          <li>Designed and developed an internal shared UI component library, standardising patterns across screens.</li>
-          <li>Led a team of up to 4 Android developers; ran code reviews, training sessions, and ensured zero regressions.</li>
-          <li>End-to-end hiring: screened, interviewed, and onboarded 10+ Android developers; mentored juniors on TDD, MVVM, and clean code practices.</li>
-          <li>Implemented multilingual and accessibility support across assigned feature areas.</li>
-        </ul>
-        <p class="exp-app">App: <a href="https://play.google.com/store/apps/details?id=com.linkedin.android" target="_blank" rel="noopener noreferrer">LinkedIn Android</a> — Google Play Store</p>
-      </li>
+    <script>
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
 
-    </ol>
+        // Toggle state drawer for mobile devices
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            
+            // Swap icon representation shapes dynamically
+            if (mobileMenu.classList.contains('hidden')) {
+                menuIcon.setAttribute('d', 'M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5');
+            } else {
+                menuIcon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+            }
+        });
 
-    <!-- Older roles — collapsed by default -->
-    <div class="exp-header">
-      <button class="exp-toggle-btn" id="older-toggle" aria-expanded="false" aria-controls="older-roles">
-         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-          Show earlier roles (2014 – 2018)
-      </button>
-    </div>
-
-    <div class="exp-collapsible" id="older-roles">
-      <ol class="exp-list" style="margin-top: 24px;" aria-label="Earlier work history">
-
-        <!-- Aptara -->
-        <li class="exp-item">
-          <div class="exp-header">
-            <span class="exp-role">Android Developer</span>
-            <span class="exp-date">Oct 2017 – Mar 2018</span>
-          </div>
-          <p class="exp-company">Avsar HR Services · Client: Aptara New Media Pvt. Ltd., Pune</p>
-          <ul class="exp-bullets">
-            <li>Managed Play Store and App Store release pipeline for Cordova-based hybrid applications.</li>
-            <li>Resolved critical bugs in payment gateway integration, in-app PDF viewer, and app expansion file handling.</li>
-          </ul>
-          <p class="exp-app">Apps: Transcend · Masterpeace Prayer — Google Play Store, App Store</p>
-        </li>
-
-        <!-- YujIT -->
-        <li class="exp-item">
-          <div class="exp-header">
-            <span class="exp-role">Senior Software Engineer</span>
-            <span class="exp-date">Sep 2016 – Oct 2017</span>
-          </div>
-          <p class="exp-company">YujIT Solutions LLP, Pune</p>
-          <ul class="exp-bullets">
-            <li>Led end-to-end Android development for multiple e-commerce applications across the full SDLC.</li>
-            <li>Managed and mentored 2 junior Android developers; reviewed deliverables and ensured on-time output.</li>
-            <li>Drove cross-functional collaboration across UI/UX, backend, QA, iOS, and Sales teams.</li>
-          </ul>
-          <p class="exp-app">Apps: Freshpick · TransitAddress — Google Play Store</p>
-        </li>
-
-        <!-- Vspace -->
-        <li class="exp-item">
-          <div class="exp-header">
-            <span class="exp-role">Android Developer</span>
-            <span class="exp-date">Oct 2014 – Aug 2016</span>
-          </div>
-          <p class="exp-company">Vspace Software, Pune</p>
-          <ul class="exp-bullets">
-            <li>Developed multiple e-commerce and fleet management Android applications end-to-end using Java.</li>
-            <li>Handled client requirements, mentored new joiners, and delivered iterative feature enhancements.</li>
-          </ul>
-        </li>
-
-      </ol>
-    </div>
-
-  </div>
-</section>
-
-<!-- ── Skills ── -->
-<section id="skills" aria-labelledby="skills-heading">
-  <div class="wrap">
-    <p class="section-label" id="skills-heading">Skills</p>
-
-    <div class="skill-group">
-      <p class="skill-group-label">Languages</p>
-      <div class="chip-row">
-        <span class="chip">Kotlin</span>
-        <span class="chip">Java</span>
-        <span class="chip">C++</span>
-        <span class="chip">XML</span>
-      </div>
-    </div>
-
-    <div class="skill-group">
-      <p class="skill-group-label">Android Core</p>
-      <div class="chip-row">
-        <span class="chip">Jetpack Compose</span>
-        <span class="chip">XML layouts</span>
-        <span class="chip">MVVM</span>
-        <span class="chip">Clean Architecture</span>
-        <span class="chip">Coroutines</span>
-        <span class="chip">Flows</span>
-        <span class="chip">RxAndroid</span>
-        <span class="chip">Room</span>
-        <span class="chip">LiveData</span>
-        <span class="chip">ViewModel</span>
-        <span class="chip">Hilt</span>
-        <span class="chip">Dagger</span>
-        <span class="chip">REST APIs</span>
-      </div>
-    </div>
-
-    <div class="skill-group">
-      <p class="skill-group-label">Specialised</p>
-      <div class="chip-row">
-        <span class="chip">BLE / IoT</span>
-        <span class="chip">ARCore</span>
-        <span class="chip">Android NDK</span>
-        <span class="chip">Kotlin Multiplatform</span>
-        <span class="chip">WiFi Provisioning</span>
-        <span class="chip">SQL</span>
-        <span class="chip">JSON</span>
-      </div>
-    </div>
-
-    <div class="skill-group">
-      <p class="skill-group-label">Testing &amp; Quality</p>
-      <div class="chip-row">
-        <span class="chip">JUnit</span>
-        <span class="chip">Espresso</span>
-        <span class="chip">Mockito</span>
-        <span class="chip">TDD</span>
-        <span class="chip">Postman</span>
-        <span class="chip">SonarQube</span>
-        <span class="chip">Android Lint</span>
-        <span class="chip">Accessibility Scanner</span>
-      </div>
-    </div>
-
-    <div class="skill-group">
-      <p class="skill-group-label">Tools &amp; DevOps</p>
-      <div class="chip-row">
-        <span class="chip">Android Studio</span>
-        <span class="chip">Git</span>
-        <span class="chip">JIRA</span>
-        <span class="chip">Confluence</span>
-        <span class="chip">Firebase Crashlytics</span>
-        <span class="chip">Firebase Analytics</span>
-        <span class="chip">Jenkins</span>
-      </div>
-    </div>
-
-    <div class="skill-group">
-      <p class="skill-group-label">Release &amp; AI</p>
-      <div class="chip-row">
-        <span class="chip">Play Store Publishing</span>
-        <span class="chip">Multi-flavor Builds</span>
-        <span class="chip">Multilingual Support</span>
-        <span class="chip">Accessibility</span>
-        <span class="chip">OAuth</span>
-        <span class="chip">Push Notifications</span>
-        <span class="chip">GitHub Copilot</span>
-        <span class="chip">Gemini</span>
-        <span class="chip">Claude</span>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ── Education ── -->
-<section id="education" aria-labelledby="edu-heading">
-  <div class="wrap">
-    <p class="section-label" id="edu-heading">Education</p>
-    <div class="edu-item">
-      <p class="edu-degree">Bachelor of Engineering — Information Technology</p>
-      <p class="edu-school">Dr. D. Y. Patil College of Engineering, Ambi · Savitribai Phule Pune University</p>
-      <p class="edu-meta">2010 – 2014</p>
-    </div>
-  </div>
-</section>
-
-<!-- ── Contact ── -->
-<section id="contact" aria-labelledby="contact-heading">
-  <div class="wrap">
-    <p class="section-label" id="contact-heading">Contact</p>
-    <ul class="contact-list" aria-label="Contact details">
-      <li class="contact-item">
-        <div class="contact-icon" aria-hidden="true">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-        </div>
-        <a href="mailto:omkar25marne@gmail.com">omkar25marne@gmail.com</a>
-      </li>
-      <li class="contact-item">
-        <div class="contact-icon" aria-hidden="true">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        </div>
-        <a href="tel:+919730898897">+91 97308 98897</a>
-      </li>
-      <li class="contact-item">
-        <div class="contact-icon" aria-hidden="true">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-        </div>
-        <a href="https://linkedin.com/in/omkar-marne/" target="_blank" rel="noopener noreferrer">linkedin.com/in/omkar-marne</a>
-      </li>
-    </ul>
-  </div>
-</section>
-
-</main>
-
-<!-- ── Footer ── -->
-<footer>
-  <div class="wrap">
-    <span>© <span id="year"></span> Omkar Marne</span>
-    &nbsp;·&nbsp;
-    <a href="#hero">Back to top ↑</a>
-  </div>
-</footer>
-
-<script>
-  // Year
-  document.getElementById('year').textContent = new Date().getFullYear();
-
-  // Hamburger
-  const hamburger  = document.getElementById('hamburger');
-  const mobileNav  = document.getElementById('mobile-nav');
-  hamburger.addEventListener('click', () => {
-    const open = mobileNav.classList.toggle('open');
-    hamburger.classList.toggle('open', open);
-    hamburger.setAttribute('aria-expanded', open);
-  });
-  mobileNav.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => {
-      mobileNav.classList.remove('open');
-      hamburger.classList.remove('open');
-      hamburger.setAttribute('aria-expanded', 'false');
-    });
-  });
-
-  // Older roles toggle
-  const olderToggle = document.getElementById('older-toggle');
-  const olderRoles  = document.getElementById('older-roles');
-  olderToggle.addEventListener('click', () => {
-    const open = olderRoles.classList.toggle('open');
-    olderToggle.setAttribute('aria-expanded', open);
-    olderToggle.querySelector('span') && null;
-    // Update label
-    olderToggle.childNodes[1].textContent = open
-      ? ' Hide earlier roles'
-      : ' Show earlier roles (2014 – 2018)';
-  });
-</script>
+        // Close state menu on layout clicks
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuIcon.setAttribute('d', 'M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5');
+            });
+        });
+    </script>
 </body>
 </html>
